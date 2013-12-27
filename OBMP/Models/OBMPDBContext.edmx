@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OBMPModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="OBMPModelStoreContainer">
+          <EntitySet Name="Partner" EntityType="OBMPModel.Store.Partner" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Product" EntityType="OBMPModel.Store.Product" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="Partner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="MSAReference" Type="nvarchar" MaxLength="20" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="PartnerType" Type="nvarchar" MaxLength="20" />
+          <Property Name="PartnerShare" Type="tinyint" />
+          <Property Name="DateRegistered" Type="datetime" />
+          <Property Name="PrimaryContact" Type="nvarchar" MaxLength="25" />
+          <Property Name="PrimaryContactDetail" Type="nvarchar" MaxLength="100" />
+          <Property Name="SecondaryContact" Type="nvarchar" MaxLength="25" />
+          <Property Name="SecondaryContactDetail" Type="nvarchar" MaxLength="100" />
+          <Property Name="TechnicalContact" Type="nvarchar" MaxLength="25" />
+          <Property Name="TechnicalContactDetail" Type="nvarchar" MaxLength="100" />
+          <Property Name="AdminContact" Type="nvarchar" MaxLength="25" />
+          <Property Name="AdminContactDetail" Type="nvarchar" MaxLength="100" />
+          <Property Name="Escalation" Type="nvarchar" MaxLength="100" />
+          <Property Name="MSAContractDocument" Type="binary" MaxLength="50" />
+          <Property Name="ServiceDescription" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="PartnerProductName" Type="nvarchar" MaxLength="100" />
+          <Property Name="SSOTProductName" Type="nvarchar" MaxLength="100" />
+          <Property Name="SAPProductName" Type="nvarchar" MaxLength="100" />
+          <Property Name="GSMISProductName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PartnerShareType" Type="tinyint" />
+          <Property Name="ShareValue1" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShareValue2" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShareValue3" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShareValue4" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShareValue5" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShareValue6" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShareValue7" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShareValue8" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShareValue9" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShareValue10" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="PartnerID" Type="int" />
+          <Property Name="ActiveFlag" Type="bit" />
+          <Property Name="DateRegistered" Type="datetime" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OBMPModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OBMPEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Partners" EntityType="OBMPModel.Partner" />
+          <EntitySet Name="Products" EntityType="OBMPModel.Product" />
+        </EntityContainer>
+        <EntityType Name="Partner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="MSAReference" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Address" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="PartnerType" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="PartnerShare" Type="Byte" />
+          <Property Name="DateRegistered" Type="DateTime" Precision="3" />
+          <Property Name="PrimaryContact" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+          <Property Name="PrimaryContactDetail" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="SecondaryContact" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+          <Property Name="SecondaryContactDetail" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="TechnicalContact" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+          <Property Name="TechnicalContactDetail" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="AdminContact" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+          <Property Name="AdminContactDetail" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Escalation" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="MSAContractDocument" Type="Binary" MaxLength="50" FixedLength="true" />
+          <Property Name="ServiceDescription" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="PartnerProductName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="SSOTProductName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="SAPProductName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="GSMISProductName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="PartnerShareType" Type="Byte" />
+          <Property Name="ShareValue1" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShareValue2" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShareValue3" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShareValue4" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShareValue5" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShareValue6" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShareValue7" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShareValue8" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShareValue9" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShareValue10" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="PartnerID" Type="Int32" />
+          <Property Name="ActiveFlag" Type="Boolean" />
+          <Property Name="DateRegistered" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OBMPModelStoreContainer" CdmEntityContainer="OBMPEntities">
+          <EntitySetMapping Name="Partners">
+            <EntityTypeMapping TypeName="OBMPModel.Partner">
+              <MappingFragment StoreEntitySet="Partner">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MSAReference" ColumnName="MSAReference" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PartnerType" ColumnName="PartnerType" />
+                <ScalarProperty Name="PartnerShare" ColumnName="PartnerShare" />
+                <ScalarProperty Name="DateRegistered" ColumnName="DateRegistered" />
+                <ScalarProperty Name="PrimaryContact" ColumnName="PrimaryContact" />
+                <ScalarProperty Name="PrimaryContactDetail" ColumnName="PrimaryContactDetail" />
+                <ScalarProperty Name="SecondaryContact" ColumnName="SecondaryContact" />
+                <ScalarProperty Name="SecondaryContactDetail" ColumnName="SecondaryContactDetail" />
+                <ScalarProperty Name="TechnicalContact" ColumnName="TechnicalContact" />
+                <ScalarProperty Name="TechnicalContactDetail" ColumnName="TechnicalContactDetail" />
+                <ScalarProperty Name="AdminContact" ColumnName="AdminContact" />
+                <ScalarProperty Name="AdminContactDetail" ColumnName="AdminContactDetail" />
+                <ScalarProperty Name="Escalation" ColumnName="Escalation" />
+                <ScalarProperty Name="MSAContractDocument" ColumnName="MSAContractDocument" />
+                <ScalarProperty Name="ServiceDescription" ColumnName="ServiceDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="OBMPModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PartnerProductName" ColumnName="PartnerProductName" />
+                <ScalarProperty Name="SSOTProductName" ColumnName="SSOTProductName" />
+                <ScalarProperty Name="SAPProductName" ColumnName="SAPProductName" />
+                <ScalarProperty Name="GSMISProductName" ColumnName="GSMISProductName" />
+                <ScalarProperty Name="PartnerShareType" ColumnName="PartnerShareType" />
+                <ScalarProperty Name="ShareValue1" ColumnName="ShareValue1" />
+                <ScalarProperty Name="ShareValue2" ColumnName="ShareValue2" />
+                <ScalarProperty Name="ShareValue3" ColumnName="ShareValue3" />
+                <ScalarProperty Name="ShareValue4" ColumnName="ShareValue4" />
+                <ScalarProperty Name="ShareValue5" ColumnName="ShareValue5" />
+                <ScalarProperty Name="ShareValue6" ColumnName="ShareValue6" />
+                <ScalarProperty Name="ShareValue7" ColumnName="ShareValue7" />
+                <ScalarProperty Name="ShareValue8" ColumnName="ShareValue8" />
+                <ScalarProperty Name="ShareValue9" ColumnName="ShareValue9" />
+                <ScalarProperty Name="ShareValue10" ColumnName="ShareValue10" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PartnerID" ColumnName="PartnerID" />
+                <ScalarProperty Name="ActiveFlag" ColumnName="ActiveFlag" />
+                <ScalarProperty Name="DateRegistered" ColumnName="DateRegistered" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
