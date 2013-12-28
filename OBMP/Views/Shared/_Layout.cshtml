@@ -9,79 +9,100 @@
     @Styles.Render("~/Content/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
 
- <style type="text/css">
-
-      /* Sticky footer styles
+    <style type="text/css">
+        /* Sticky footer styles
       -------------------------------------------------- */
 
-      html,
-      body {
-        height: 100%;
-        /* The html and body elements cannot have any padding or margin. */
-      }
+        html,
+        body {
+            height: 100%;
+            /* The html and body elements cannot have any padding or margin. */
+        }
 
-      /* Wrapper for page content to push down footer */
-      #wrap {
-        min-height: 100%;
-        height: auto !important;
-        height: 100%;
-        /* Negative indent footer by it's height */
-        margin: 0 auto -25px;
-      }
+        /* Wrapper for page content to push down footer */
+        #wrap {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            /* Negative indent footer by it's height */
+            margin: 0 auto -25px;
+        }
 
-      /* Set the fixed height of the footer here */
-      #push,
-      #footer {
-        height: 25px;
-      }
-      #footer {
-        background-color: #f5f5f5;
-      }
+        /* Set the fixed height of the footer here */
+        #push,
+        #footer {
+            height: 25px;
+        }
 
-  
+        #footer {
+            background-color: #f5f5f5;
+        }
+
+        /*new change with shopify theme branch*/
     </style>
 
 </head>
 <body>
     <div id="wrap">
-    <div class="container">
+        <div class="container">
+            <nav class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <a class="brand" href="/">OBMP</a>
 
-        <nav class="navbar navbar-inverse">
-            <div class="navbar-inner">
-                <a class="brand" href="/">OBMP</a>
-                <ul id="menu" class="nav">
-                    <li>@Html.ActionLink("Marketplace", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Customer", "Index", "Customer")</li>
-@*                    @if (User.IsInRole("Customer"))
-                    {
-                        <li>@Html.ActionLink("Customer", "Index", "Customer")</li>
-                    }*@
-                     <li>@Html.ActionLink("Partner", "Index", "Partner")</li>
-@*                    @if (User.IsInRole("Partner"))
-                    {
-                        <li>@Html.ActionLink("Partner", "Index", "Partner")</li>
-                    }*@
-                     <li>@Html.ActionLink("Optus", "Index", "Optus")</li>
-                    @*@if (User.IsInRole("Optus"))
-                    {
-                        <li>@Html.ActionLink("Optus", "Index", "Optus")</li>
-                    }*@
-                    <li>@Html.ActionLink("About Us", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+                    <div class="pull-right">
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </nav>
 
-                <div class="pull-right">
-                    @Html.Partial("_LoginPartial")
+
+
+
+            <div class="row">
+                <div class="span2">
+
+                    <ul class="nav nav-list alert alert-info">
+
+                        <li class="nav-header">YOUR STORE</li>
+
+                        <li><a class="" href="~/Home/index"><i class="icon-home"></i>Dashboard</a></li>
+                        <li><a class="" href="~/Customer/order"><i class="icon-inbox"></i>Orders</a></li>
+                        <li><a class="" href="#"><i class="icon-user"></i>Customers</a></li>
+                        <li><a class="" href="#"><i class="icon-gift"></i>Products</a></li>
+                        <li><a class="" href="#"><i class="icon-user"></i>Partners</a></li>
+                        <li><a class="" href="#"><i class="icon-file"></i>Optus</a></li>
+                        <li><a class="" href="#"><i class="icon-signal"></i>Reports</a></li>
+                        <li class="divider"></li>
+
+                        <li><a class="" href="~/Home/About"><i class="icon-info-sign"></i>About Us</a></li>
+                        <li><a class="" href="~/Home/Contact"><i class="icon-envelope"></i>Contact</a></li>
+
+
+                    </ul>
+
+                </div>
+                <div class="span10">
+
+                    <div class="row">
+
+                        <div class="span10">
+                            <div class="alert alert-info"> 
+                                <strong>@ViewBag.Title</strong>
+                            </div>
+                        </div>
+                        <div class="span10">
+                            @RenderSection("featured", required: false)
+                            @RenderBody()
+
+                        </div>
+
+                    </div>
+
+
                 </div>
             </div>
-        </nav>
-        
-
-        @RenderSection("featured", required: false)
-        @RenderBody()
-
-    </div>
         </div>
+    </div>
 
     <div id="footer">
         <div class="container">

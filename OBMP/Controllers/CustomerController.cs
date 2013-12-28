@@ -17,5 +17,13 @@ namespace OBMP.Controllers
             return View();
         }
 
+
+        //
+        // GET: /Customer/Orders
+
+        public ActionResult Order()
+        {
+            return View();
+        }
     }
 }
