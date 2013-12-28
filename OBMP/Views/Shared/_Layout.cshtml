@@ -41,6 +41,18 @@
         /*new change with shopify theme branch*/
     </style>
 
+	<!--This bundle was moved by the Kendo UI VS Extensions for compatibility reasons-->
+	@Scripts.Render("~/bundles/jquery")
+	<!--This CSS entry was added by the Kendo UI VS Extensions for compatibility reasons-->
+	<link href="@Url.Content("~/Content/kendo.compatibility.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.blueopal.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.dataviz.blueopal.min.css")" rel="stylesheet" type="text/css" />
+	<script src="@Url.Content("~/Scripts/kendo/2013.3.1119/jquery.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2013.3.1119/kendo.all.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2013.3.1119/kendo.aspnetmvc.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
 </head>
 <body>
     <div id="wrap">
@@ -66,7 +78,7 @@
                         <li class="nav-header">YOUR STORE</li>
 
                         <li><a class="" href="~/Home/index"><i class="icon-home"></i>Dashboard</a></li>
-                        <li><a class="" href="~/Customer/order"><i class="icon-inbox"></i>Orders</a></li>
+                        <li><a class="" href="~/Order/All"><i class="icon-inbox"></i>Orders</a></li>
                         <li><a class="" href="#"><i class="icon-user"></i>Customers</a></li>
                         <li><a class="" href="#"><i class="icon-gift"></i>Products</a></li>
                         <li><a class="" href="#"><i class="icon-user"></i>Partners</a></li>
@@ -110,7 +122,7 @@
         </div>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
