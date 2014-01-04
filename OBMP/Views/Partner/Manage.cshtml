@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Patner Management";
+}
+
+<ul id="myTab" class="nav nav-tabs">
+    <li class="active"><a href="~/Partner/Manage" class="btn-large">Partner List</a></li>
+    <li><a href="~/Partner/Add" class="btn-large">Add New Partner</a></li>
+    @*<li class="disabled"><a href="~/Partner/Edit" class="btn-large">Edit Partner</a></li>*@
+</ul>
+
+<script id="client-template" type="text/x-kendo-template">
+    <div class='well'>
+        <div class='row'> 
+            <div class='span4'>
+                  <div>PartnerID: #: ID #</div>
+                  <div>Name: #: Name #</div>
+                  <div>MSAReference: #: MSAReference #</div>
+             </div>
+
+             <div class='span4'>
+                  <div>Address: #: Address #</div>
+                  <div>DateRegistered: #=kendo.toString(DateRegistered,"yyyy-MM-dd") #</div>
+                  <div>PartnerShare: #: PartnerShare #</div>
+            </div>
+        </div>
+    </div>
+</script>
+
+@(Html.Kendo().Grid<OBMPDataModel.Partner>()
+      .Name("PartnerList")
+      .DataSource(dataSource => dataSource // Configure the grid data source
+          .Ajax() // Specify that ajax binding is used
+          .Model(model =>
+            {
+                model.Id(p => p.ID); // Specify the property which is the unique identifier of the model
+                model.Field(p => p.ID).Editable(false); // Make the ProductID property not editable
+            })
+          .Read(read => read.Action("AllPartners", "Partner")) // Set the action method which will return the data in JSON format
+          .Update(update => update.Action("Update", "Partner"))  // Action invoked when the user saves an updated data item
+       )
+      .Columns(columns =>
+      {
+          // Create a column bound to the ID property
+          columns.Bound(p => p.ID).Filterable(false);
+          columns.Bound(p => p.Name);
+          columns.Bound(p => p.MSAReference);
+          columns.Bound(p => p.PartnerType).Title("Type");
+          columns.Bound(p => p.PartnerShare).Title("Share");
+          //columns.Bound(p => p.DateRegistered).Format("{0:d}");
+          columns.Bound(p => p.PrimaryContact);
+          columns.Command(commands => { commands.Edit(); }).Width(100);
+      })
+      .Pageable() // Enable paging
+      .Sortable() // Enable sorting
+      .Filterable()
+      .Editable(editable => editable.Mode(GridEditMode.PopUp))
+      .ClientDetailTemplateId("client-template")
+)

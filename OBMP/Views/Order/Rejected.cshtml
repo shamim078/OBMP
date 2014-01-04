@@ -15,17 +15,18 @@
     <li class="active"><a href="~/Order/Rejected">Rejected</a></li>
 </ul>
 
-@(Html.Kendo().Grid<Product>().Name("Products").Columns(c => {
-    c.Bound(p => p.Name);
-    c.Bound(p => p.Supplier.Name).Title("Partner");
-    c.Bound(p => p.Category.Name).Title("Category");
-    c.Bound(p => p.UnitPrice).Format("{0:c}");
-    c.Bound(p => p.UnitsInStock);
-    c.Bound(p => p.Discontinued);
+
+@(Html.Kendo().Grid<OrderViewModel>().Name("Order").Columns(c => {
+    c.Bound(o => o.Id);
+    c.Bound(o => o.CustomerId);
+    c.Bound(o => o.CustomerName);
+    c.Bound(o => o.OrderDate).Format("{0:d}"); 
+    c.Bound(o => o.RequiredDate).Format("{0:d}"); 
+    c.Bound(o => o.Status);
     })
     .DataSource(d => d
         .Ajax()
-        .Read(r => r.Action("GetProducts", "Customer"))
+        .Read(r => r.Action("GetAllOrders", "Order"))
         .PageSize(10)
     )
     .Pageable()

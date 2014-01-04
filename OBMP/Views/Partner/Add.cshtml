@@ -1,0 +1,302 @@
+﻿@model OBMPDataModel.Partner
+
+
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+
+@{
+    ViewBag.Title = "Patner Management";
+}
+
+<ul id="myTab" class="nav nav-tabs">
+    <li><a href="~/Partner/Manage" class="btn-large">Partner List</a></li>
+    <li class="active"><a href="~/Partner/Add" class="btn-large">Add New Partner</a></li>
+    @*<li class="disabled"><a href="~/Partner/Edit" class="btn-large">Edit Partner</a></li>*@
+</ul>
+
+<script>
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+
+
+</script>
+
+@if (TempData["Success"] != null && TempData["Success"].ToString()=="true") {
+                    
+                        <script>
+
+                            (function () {
+                                toastr.success('Partner data saved successfully :)');
+
+                            })();
+                        </script>
+                }
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "false")
+{
+                    
+                        <script>
+                            (function () {
+                                toastr.error('Some erroe occured :(');
+                            })();
+                        </script>
+                }
+
+
+
+<section class="well">
+
+    @using (Html.BeginForm("Add", "Partner", FormMethod.Post, new { @class = "form-horizontal", @id="Partner" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="row">
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+
+
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.MSAReference, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.MSAReference)
+                        @Html.ValidationMessageFor(model => model.MSAReference)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Address, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.PartnerType, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.PartnerType)
+                        @Html.ValidationMessageFor(model => model.PartnerType)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.PartnerShare, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.PartnerShare)
+                        @Html.ValidationMessageFor(model => model.PartnerShare)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.DateRegistered, new { @class = "control-label" })
+
+                    <div class="controls">
+
+                        
+                        @Html.Kendo().DatePickerFor(modle=>Model.DateRegistered).Value(DateTime.Today)
+
+                        @Html.ValidationMessageFor(model => model.DateRegistered)
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div> 
+
+       
+
+        <div class="row">
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.PrimaryContact, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.PrimaryContact)
+                        @Html.ValidationMessageFor(model => model.PrimaryContact)
+                    </div>
+                </div>
+            </div>
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.PrimaryContactDetail, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.PrimaryContactDetail)
+                        @Html.ValidationMessageFor(model => model.PrimaryContactDetail)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.SecondaryContact, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.SecondaryContact)
+                        @Html.ValidationMessageFor(model => model.SecondaryContact)
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.SecondaryContactDetail, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.SecondaryContactDetail)
+                        @Html.ValidationMessageFor(model => model.SecondaryContactDetail)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="span4">
+
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.TechnicalContact, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.TechnicalContact)
+                        @Html.ValidationMessageFor(model => model.TechnicalContact)
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.TechnicalContactDetail, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.TechnicalContactDetail)
+                        @Html.ValidationMessageFor(model => model.TechnicalContactDetail)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.AdminContact, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.AdminContact)
+                        @Html.ValidationMessageFor(model => model.AdminContact)
+                    </div>
+                </div>
+            </div>
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.AdminContactDetail, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.AdminContactDetail)
+                        @Html.ValidationMessageFor(model => model.AdminContactDetail)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Escalation, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.Escalation)
+                        @Html.ValidationMessageFor(model => model.Escalation)
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ServiceDescription, new { @class = "control-label" })
+
+                    <div class="controls">
+
+                        @Html.TextAreaFor(model => model.ServiceDescription)
+                        @Html.ValidationMessageFor(model => model.ServiceDescription)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p class="pull-right">
+            <input type="submit" value="Save Partner Data" class="btn btn-primary" />
+            <input type="reset" value="Reset Data" class="btn"  />
+        </p>
+    
+    }
+
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -26,9 +26,10 @@ namespace OBMP.Data
         }
     
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Order_Detail> Order_Details { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order_Detail> Order_Details { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

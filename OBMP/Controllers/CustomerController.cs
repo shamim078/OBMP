@@ -23,6 +23,12 @@ namespace OBMP.Controllers
             return View();
         }
 
+        public ActionResult Manage()
+        {
+            return View();
+        }
+
+
 
         // parse the incoming request from Kendo UI into a DataSourceRequest
         public JsonResult GetProducts([DataSourceRequest]DataSourceRequest request)

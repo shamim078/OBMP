@@ -119,6 +119,8 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.OpenAccess, Version=2013.3.1014.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2013.3.1014.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL" />
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
@@ -170,13 +172,18 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ContextFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OptusController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Data\Category.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Customer.cs">
       <DependentUpon>Northwind.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Northwind.Context.cs">
@@ -212,6 +219,9 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\PartnerList.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -484,8 +494,87 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Products\1.jpg" />
+    <Content Include="Images\Products\10.jpg" />
+    <Content Include="Images\Products\11.jpg" />
+    <Content Include="Images\Products\12.jpg" />
+    <Content Include="Images\Products\13.jpg" />
+    <Content Include="Images\Products\14.jpg" />
+    <Content Include="Images\Products\15.jpg" />
+    <Content Include="Images\Products\16.jpg" />
+    <Content Include="Images\Products\17.jpg" />
+    <Content Include="Images\Products\18.jpg" />
+    <Content Include="Images\Products\19.jpg" />
+    <Content Include="Images\Products\2.jpg" />
+    <Content Include="Images\Products\20.jpg" />
+    <Content Include="Images\Products\21.jpg" />
+    <Content Include="Images\Products\22.jpg" />
+    <Content Include="Images\Products\23.jpg" />
+    <Content Include="Images\Products\24.jpg" />
+    <Content Include="Images\Products\25.jpg" />
+    <Content Include="Images\Products\26.jpg" />
+    <Content Include="Images\Products\27.jpg" />
+    <Content Include="Images\Products\28.jpg" />
+    <Content Include="Images\Products\29.jpg" />
+    <Content Include="Images\Products\3.jpg" />
+    <Content Include="Images\Products\30.jpg" />
+    <Content Include="Images\Products\31.jpg" />
+    <Content Include="Images\Products\32.jpg" />
+    <Content Include="Images\Products\33.jpg" />
+    <Content Include="Images\Products\34.jpg" />
+    <Content Include="Images\Products\35.jpg" />
+    <Content Include="Images\Products\36.jpg" />
+    <Content Include="Images\Products\37.jpg" />
+    <Content Include="Images\Products\38.jpg" />
+    <Content Include="Images\Products\39.jpg" />
+    <Content Include="Images\Products\4.jpg" />
+    <Content Include="Images\Products\40.jpg" />
+    <Content Include="Images\Products\41.jpg" />
+    <Content Include="Images\Products\42.jpg" />
+    <Content Include="Images\Products\43.jpg" />
+    <Content Include="Images\Products\44.jpg" />
+    <Content Include="Images\Products\45.jpg" />
+    <Content Include="Images\Products\46.jpg" />
+    <Content Include="Images\Products\47.jpg" />
+    <Content Include="Images\Products\48.jpg" />
+    <Content Include="Images\Products\49.jpg" />
+    <Content Include="Images\Products\5.jpg" />
+    <Content Include="Images\Products\50.jpg" />
+    <Content Include="Images\Products\51.jpg" />
+    <Content Include="Images\Products\52.jpg" />
+    <Content Include="Images\Products\53.jpg" />
+    <Content Include="Images\Products\54.jpg" />
+    <Content Include="Images\Products\55.jpg" />
+    <Content Include="Images\Products\56.jpg" />
+    <Content Include="Images\Products\57.jpg" />
+    <Content Include="Images\Products\58.jpg" />
+    <Content Include="Images\Products\59.jpg" />
+    <Content Include="Images\Products\6.jpg" />
+    <Content Include="Images\Products\60.jpg" />
+    <Content Include="Images\Products\61.jpg" />
+    <Content Include="Images\Products\62.jpg" />
+    <Content Include="Images\Products\63.jpg" />
+    <Content Include="Images\Products\64.jpg" />
+    <Content Include="Images\Products\65.jpg" />
+    <Content Include="Images\Products\66.jpg" />
+    <Content Include="Images\Products\67.jpg" />
+    <Content Include="Images\Products\68.jpg" />
+    <Content Include="Images\Products\69.jpg" />
+    <Content Include="Images\Products\7.jpg" />
+    <Content Include="Images\Products\70.jpg" />
+    <Content Include="Images\Products\71.jpg" />
+    <Content Include="Images\Products\72.jpg" />
+    <Content Include="Images\Products\73.jpg" />
+    <Content Include="Images\Products\74.jpg" />
+    <Content Include="Images\Products\75.jpg" />
+    <Content Include="Images\Products\76.jpg" />
+    <Content Include="Images\Products\77.jpg" />
+    <Content Include="Images\Products\8.jpg" />
+    <Content Include="Images\Products\9.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\html5shiv.js" />
@@ -511,6 +600,7 @@
       <DependentUpon>Northwind.edmx</DependentUpon>
       <LastGenOutput>Northwind.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -632,6 +722,8 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -670,15 +762,13 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Optus\Index.cshtml" />
     <Content Include="Views\Partner\Index.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
-    <Content Include="Views\Shared\Index.cshtml" />
-    <Content Include="Views\Shared\Details.cshtml" />
-    <Content Include="Views\Shared\Create.cshtml" />
     <Content Include="Views\Shared\_validationSummary.cshtml" />
-    <Content Include="Views\Shared\_alerts.cshtml" />
     <Content Include="Scripts\kendo\2013.3.1119\jquery.min.map" />
     <Content Include="Scripts\kendo\2013.3.1119\kendo.all.min.js.map" />
     <Content Include="Scripts\kendo\2013.3.1119\kendo.aspnetmvc.min.js.map" />
@@ -784,11 +874,20 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
-    <Content Include="Views\Order\All.cshtml" />
     <Content Include="Views\Order\Accepted.cshtml" />
     <Content Include="Views\Order\Rejected.cshtml" />
     <Content Include="Views\Order\Confirmed.cshtml" />
     <Content Include="Views\Order\Pending.cshtml" />
+    <Content Include="Views\Order\All.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Shared\_TelcoAdminLayout.cshtml" />
+    <Content Include="Views\Partner\Manage.cshtml" />
+    <Content Include="Views\Product\Manage.cshtml" />
+    <Content Include="Views\Customer\Manage.cshtml" />
+    <Content Include="Views\Partner\Add_Old.cshtml" />
+    <Content Include="Views\Partner\Edit.cshtml" />
+    <Content Include="Views\Partner\Add.cshtml" />
+    <Content Include="Scripts\toastr.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -798,6 +897,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OBMPDataModel\OBMPDataModel.csproj">
+      <Project>{6f9c2621-695c-4bde-881b-157dcaa75c07}</Project>
+      <Name>OBMPDataModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -834,4 +939,5 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Import Condition="Exists('$(MSBuildExtensionsPath)\OpenAccess.targets')" Project="$(MSBuildExtensionsPath)\OpenAccess.targets" />
 </Project>
