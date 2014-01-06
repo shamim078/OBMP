@@ -219,10 +219,12 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CustomerList.cs" />
     <Compile Include="Models\PartnerList.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductList.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -884,10 +886,12 @@
     <Content Include="Views\Partner\Manage.cshtml" />
     <Content Include="Views\Product\Manage.cshtml" />
     <Content Include="Views\Customer\Manage.cshtml" />
-    <Content Include="Views\Partner\Add_Old.cshtml" />
     <Content Include="Views\Partner\Edit.cshtml" />
     <Content Include="Views\Partner\Add.cshtml" />
     <Content Include="Scripts\toastr.min.js.map" />
+    <Content Include="Views\Product\Add.cshtml" />
+    <Content Include="Views\Product\Share.cshtml" />
+    <Content Include="Views\Customer\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

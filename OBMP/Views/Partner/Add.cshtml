@@ -60,7 +60,7 @@
 
 <section class="well">
 
-    @using (Html.BeginForm("Add", "Partner", FormMethod.Post, new { @class = "form-horizontal", @id="Partner" }))
+    @using (Html.BeginForm("Add", "Partner", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)

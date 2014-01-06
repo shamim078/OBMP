@@ -3,8 +3,59 @@
 }
 
 <ul id="myTab" class="nav nav-tabs">
-    <li  class="active"><a href="#" class="btn-large">Product List</a></li>
-    <li><a href="#"  class="btn-large">Add New Product</a></li>
-    <li><a href="#"  class="btn-large">Edit Product</a></li>
-    <li><a href="#"  class="btn-large">Product-wise shares</a></li>
+    <li  class="active"><a href="~/Product/Manage" class="btn-large">Product List</a></li>
+    <li><a href="~/Product/Add"  class="btn-large">Add New Product</a></li>
 </ul>
+
+
+
+<script id="client-template" type="text/x-kendo-template">
+    <div class='well'>
+        <div class='row'> 
+                <div class='span4'>
+                    <div>ProductID: #: ID #</div>
+                    <div>Name: #: Name #</div>
+                    <div>Description: #: Description #</div>
+                    <div>ActiveFlag: #: ActiveFlag #</div>
+                </div>
+
+             <div class='span4'>
+                  <div>Partner: #: Partner #</div>
+                  <div>PartnerShareType: #: PartnerShareType #</div>
+                  <div>ShareValue1: #: ShareValue1 #</div>
+                  <div>DateRegistered: #=kendo.toString(DateRegistered,"yyyy-MM-dd") #</div>
+            </div>
+        </div>
+    </div>
+</script>
+
+@(Html.Kendo().Grid<OBMPDataModel.Product>()
+      .Name("ProductList")
+      .DataSource(dataSource => dataSource // Configure the grid data source
+          .Ajax() // Specify that ajax binding is used
+          .Model(model =>
+            {
+                model.Id(p => p.ID); // Specify the property which is the unique identifier of the model
+                model.Field(p => p.ID).Editable(false); // Make the ProductID property not editable
+            })
+          .Read(read => read.Action("AllProducts", "Product")) // Set the action method which will return the data in JSON format
+          .Update(update => update.Action("Update", "Product"))  // Action invoked when the user saves an updated data item
+       )
+      .Columns(columns =>
+      {
+          // Create a column bound to the ID property
+          columns.Bound(p => p.ID).Filterable(false);
+          columns.Bound(p => p.Name);
+          columns.Bound(p => p.Partner);
+          columns.Bound(p => p.PartnerShareType);
+          columns.Bound(p => p.ShareValue1);
+          //columns.Bound(p => p.DateRegistered).Format("{0:d}");
+          columns.Bound(p => p.ActiveFlag);
+          columns.Command(commands => { commands.Edit(); }).Width(100);
+      })
+      .Pageable() // Enable paging
+      .Sortable() // Enable sorting
+      .Filterable()
+      .Editable(editable => editable.Mode(GridEditMode.PopUp))
+      .ClientDetailTemplateId("client-template")
+)

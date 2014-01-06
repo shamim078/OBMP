@@ -300,7 +300,7 @@ namespace OBMPDataModel
 	
 		public void PrepareCustomerPropertyConfigurations(MappingConfiguration<Customer> configuration)
 		{
-			configuration.HasProperty(x => x.ID).IsIdentity().HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.UID).HasFieldName("_uID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("UID").IsNullable().HasColumnType("nvarchar").HasLength(50);
 			configuration.HasProperty(x => x.Name).HasFieldName("_name").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Name").IsNullable().HasColumnType("nvarchar").HasLength(100);
 			configuration.HasProperty(x => x.AccountReference).HasFieldName("_accountReference").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("AccountReference").IsNullable().HasColumnType("nvarchar").HasLength(50);

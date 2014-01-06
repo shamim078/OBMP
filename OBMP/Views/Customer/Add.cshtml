@@ -1,0 +1,142 @@
+﻿@model OBMPDataModel.Customer
+
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+
+@{
+    ViewBag.Title = "Customer Management";
+}
+
+<ul id="myTab" class="nav nav-tabs">
+    <li><a href="~/Customer/Manage" class="btn-large">Customer List</a></li>
+    <li   class="active"><a href="~/Customer/Add"  class="btn-large">Add New Customer</a></li>
+</ul>
+
+
+<script>
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+
+
+</script>
+
+@if (TempData["Success"] != null && TempData["Success"].ToString()=="true") {
+                    
+                        <script>
+
+                            (function () {
+                                toastr.success('Customer data saved successfully :)');
+
+                            })();
+                        </script>
+                }
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "false")
+{
+                    
+                        <script>
+                            (function () {
+                                toastr.error('Some erroe occured :(');
+                            })();
+                        </script>
+                }
+
+
+
+<section class="well">
+
+    @using (Html.BeginForm("Add", "Customer", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="row">
+
+            <div class="span8">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.UID, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.EditorFor(model => model.UID)
+                        @Html.ValidationMessageFor(model => model.UID)
+                    </div>
+                </div>
+
+                                <div class="control-group">
+                    @Html.LabelFor(model => model.AccountReference, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.AccountReference)
+                        @Html.ValidationMessageFor(model => model.AccountReference)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Address, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ContactPerson, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ContactPerson)
+                        @Html.ValidationMessageFor(model => model.ContactPerson)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ContactDetail, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.ContactDetail)
+                        @Html.ValidationMessageFor(model => model.ContactDetail)
+                    </div>
+                </div>
+
+          
+
+            </div>
+
+        </div>
+
+
+        <p class="pull-right">
+            <input type="submit" value="Save Partner Data" class="btn btn-primary" />
+            <input type="reset" value="Reset Data" class="btn"  />
+        </p>
+    
+    }
+
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

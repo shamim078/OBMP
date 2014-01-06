@@ -3,13 +3,56 @@
 }
 
 <ul id="myTab" class="nav nav-tabs">
-    <li  class="active"><a href="#" class="btn-large">Customer List</a></li>
-    <li><a href="#"  class="btn-large">Add New Customer</a></li>
-    <li><a href="#"  class="btn-large disabled">Edit Customers</a></li>
+    <li  class="active"><a href="~/Customer/Manage" class="btn-large">Customer List</a></li>
+    <li><a href="~/Customer/Add"  class="btn-large">Add New Customer</a></li>
 </ul>
 
-@*<ul id="myTab" class="nav nav-tabs">
-    <li  class="active"><a href="#">Partner List</a></li>
-    <li><a href="#" >Add New Partner</a></li>
-    <li><a href="#">Edit Partner</a></li>
-</ul>*@
+
+
+<script id="client-template" type="text/x-kendo-template">
+    <div class='well'>
+        <div class='row'> 
+            <div class='span4'>
+                  <div>Customer ID: #: ID #</div>
+                  <div>Name: #: Name #</div>
+                  <div>Account Reference: #: AccountReference #</div>
+             </div>
+
+             <div class='span4'>
+                  <div>Address: #: Address #</div>
+                  <div>Contact Person: #: ContactPerson #</div>
+                  <div>Contact Detail: #: ContactDetail #</div>
+            </div>
+        </div>
+    </div>
+</script>
+
+@(Html.Kendo().Grid<OBMPDataModel.Customer>()
+      .Name("CustomerList")
+      .DataSource(dataSource => dataSource // Configure the grid data source
+          .Ajax() // Specify that ajax binding is used
+          .Model(model =>
+            {
+                model.Id(p => p.ID); // Specify the property which is the unique identifier of the model
+                model.Field(p => p.ID).Editable(false); // Make the ProductID property not editable
+            })
+          .Read(read => read.Action("AllCustomers", "Customer")) // Set the action method which will return the data in JSON format
+          .Update(update => update.Action("Update", "Customer"))  // Action invoked when the user saves an updated data item
+       )
+      .Columns(columns =>
+      {
+          // Create a column bound to the ID property
+          columns.Bound(p => p.ID).Filterable(false);
+          columns.Bound(c => c.UID);
+          columns.Bound(p => p.Name);
+          columns.Bound(p => p.AccountReference);
+          columns.Bound(p => p.ContactPerson);
+          //columns.Bound(p => p.DateRegistered).Format("{0:d}");
+          columns.Command(commands => { commands.Edit(); }).Width(100);
+      })
+      .Pageable() // Enable paging
+      .Sortable() // Enable sorting
+      .Filterable()
+      .Editable(editable => editable.Mode(GridEditMode.PopUp))
+      .ClientDetailTemplateId("client-template")
+)

@@ -18,6 +18,7 @@ using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
+using System.ComponentModel.DataAnnotations;
 using OBMPDataModel;
 
 namespace OBMPDataModel	
@@ -25,6 +26,8 @@ namespace OBMPDataModel
 	public partial class Product
 	{
 		private long _iD;
+		[Required()]
+		[Key()]
 		public virtual long ID
 		{
 			get
@@ -38,6 +41,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _name;
+		[StringLength(100)]
 		public virtual string Name
 		{
 			get
@@ -51,6 +55,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _partnerProductName;
+		[StringLength(100)]
 		public virtual string PartnerProductName
 		{
 			get
@@ -64,6 +69,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _sSOTProductName;
+		[StringLength(100)]
 		public virtual string SSOTProductName
 		{
 			get
@@ -77,6 +83,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _sAPProductName;
+		[StringLength(100)]
 		public virtual string SAPProductName
 		{
 			get
@@ -90,6 +97,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _gSMISProductName;
+		[StringLength(100)]
 		public virtual string GSMISProductName
 		{
 			get
@@ -116,6 +124,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _shareValue1;
+		[StringLength(50)]
 		public virtual string ShareValue1
 		{
 			get
@@ -129,6 +138,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _shareValue2;
+		[StringLength(50)]
 		public virtual string ShareValue2
 		{
 			get
@@ -142,6 +152,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _shareValue3;
+		[StringLength(50)]
 		public virtual string ShareValue3
 		{
 			get
@@ -155,6 +166,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _shareValue4;
+		[StringLength(50)]
 		public virtual string ShareValue4
 		{
 			get
@@ -168,6 +180,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _shareValue5;
+		[StringLength(50)]
 		public virtual string ShareValue5
 		{
 			get
@@ -181,6 +194,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _shareValue6;
+		[StringLength(50)]
 		public virtual string ShareValue6
 		{
 			get
@@ -194,6 +208,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _shareValue7;
+		[StringLength(50)]
 		public virtual string ShareValue7
 		{
 			get
@@ -207,6 +222,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _shareValue8;
+		[StringLength(50)]
 		public virtual string ShareValue8
 		{
 			get
@@ -220,6 +236,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _shareValue9;
+		[StringLength(50)]
 		public virtual string ShareValue9
 		{
 			get
@@ -233,6 +250,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _shareValue10;
+		[StringLength(50)]
 		public virtual string ShareValue10
 		{
 			get
@@ -246,6 +264,7 @@ namespace OBMPDataModel
 		}
 		
 		private string _description;
+		[StringLength(250)]
 		public virtual string Description
 		{
 			get
@@ -285,6 +304,7 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _dateRegistered;
+		[DataType(DataType.DateTime)]
 		public virtual DateTime? DateRegistered
 		{
 			get

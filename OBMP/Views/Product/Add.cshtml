@@ -1,0 +1,363 @@
+﻿@model OBMPDataModel.Product
+
+
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+
+@{
+    ViewBag.Title = "Patner Management";
+}
+
+<ul id="myTab" class="nav nav-tabs">
+    <li><a href="~/Product/Manage" class="btn-large">Product List</a></li>
+    <li  class="active"><a href="~/Product/Add"  class="btn-large">Add New Product</a></li>
+</ul>
+
+<script>
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+
+
+</script>
+
+@if (TempData["Success"] != null && TempData["Success"].ToString()=="true") {
+                    
+                        <script>
+
+                            (function () {
+                                toastr.success('Product data saved successfully :)');
+
+                            })();
+                        </script>
+                }
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "false")
+{
+                    
+                        <script>
+                            (function () {
+                                toastr.error('Some erroe occured :(');
+                            })();
+                        </script>
+                }
+
+
+
+<section class="well">
+
+    @using (Html.BeginForm("Add", "Product", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="row">
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+
+
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.PartnerProductName, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.PartnerProductName)
+                        @Html.ValidationMessageFor(model => model.PartnerProductName)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.SSOTProductName, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.SSOTProductName)
+                        @Html.ValidationMessageFor(model => model.SSOTProductName)
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.SAPProductName, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.SAPProductName)
+                        @Html.ValidationMessageFor(model => model.SAPProductName)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.GSMISProductName, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.GSMISProductName)
+                        @Html.ValidationMessageFor(model => model.GSMISProductName)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Description, new { @class = "control-label" })
+
+                    <div class="controls">
+
+                        
+                        @Html.TextAreaFor(modle=>Model.Description)
+
+                        @Html.ValidationMessageFor(model => model.Description)
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div> 
+
+       
+
+        <div class="row">
+            <div class="span4">
+
+                <div class="control-group">
+
+@*                    @Html.LabelFor(model => model.Partner, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Partner)
+                        @Html.ValidationMessageFor(model => model.Partner)
+                    </div>*@
+
+                    <label class="control-label" for="Partner">Partner</label>
+                    <div class="controls">
+                      <input type="text" id="Partner" class="k-textbox">
+                    </div>
+
+                </div>
+           </div>
+
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.PartnerShareType, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.PartnerShareType)
+                        @Html.ValidationMessageFor(model => model.PartnerShareType)
+                    </div>
+                </div>
+           </div>
+        </div>
+
+        <div class="row">
+                
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareValue1, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ShareValue1)
+                        @Html.ValidationMessageFor(model => model.ShareValue1)
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareValue2, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ShareValue2)
+                        @Html.ValidationMessageFor(model => model.ShareValue2)
+                    </div>
+                </div>
+
+            </div>
+      </div>
+
+        <div class="row">
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareValue3, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ShareValue3)
+                        @Html.ValidationMessageFor(model => model.ShareValue3)
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareValue4, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ShareValue4)
+                        @Html.ValidationMessageFor(model => model.ShareValue4)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class ="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareValue5, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ShareValue5)
+                        @Html.ValidationMessageFor(model => model.ShareValue5)
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareValue6, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ShareValue6)
+                        @Html.ValidationMessageFor(model => model.ShareValue6)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareValue7, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ShareValue7)
+                        @Html.ValidationMessageFor(model => model.ShareValue7)
+                    </div>
+                </div>
+            </div>
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareValue8, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ShareValue8)
+                        @Html.ValidationMessageFor(model => model.ShareValue8)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        
+        <div class="row">
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareValue9, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ShareValue9)
+                        @Html.ValidationMessageFor(model => model.ShareValue9)
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareValue10, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ShareValue10)
+                        @Html.ValidationMessageFor(model => model.ShareValue10)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="span4">
+
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ActiveFlag, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ActiveFlag)
+                        @Html.ValidationMessageFor(model => model.ActiveFlag)
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.DateRegistered, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.Kendo().DatePickerFor(modle=>Model.DateRegistered).Value(DateTime.Today)
+                        @Html.ValidationMessageFor(model => model.DateRegistered)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        
+        <p class="pull-right">
+            <input type="submit" value="Save Product Data" class="btn btn-primary" />
+            <input type="reset" value="Reset Data" class="btn"  />
+        </p>
+    
+    }
+
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
