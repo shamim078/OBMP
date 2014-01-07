@@ -3,57 +3,30 @@
 }
 
 
-<div class="hero-unit">
-    <h1>OBMP</h1>
-    <p>Welcom to Optus Business Market Place</p>
-    <p>
-        <a class="btn btn-primary btn-large">Learn more</a>
-    </p>
-</div>
-
-<ul class="thumbnails">
-  <li class="span3">
-    <div class="thumbnail">
-      <img data-src="holder.js/300x200" alt="">
-      <h3>Thumbnail picture</h3>
-      <p>Thumbnail caption...</p>
-    </div>
-  </li>
-
-      <li class="span3">
-    <div class="thumbnail">
-      <img data-src="holder.js/300x200" alt="">
-      <h3>Thumbnail picture</h3>
-      <p>Thumbnail caption...</p>
-    </div>
-  </li>
-  <li class="span3">
-    <div class="thumbnail">
-      <img data-src="holder.js/300x200" alt="">
-      <h3>Thumbnail picture</h3>
-      <p>Thumbnail caption...</p>
-    </div>
-  </li>
-  <li class="span3">
-    <div class="thumbnail">
-      <img data-src="holder.js/300x200" alt="">
-      <h3>Thumbnail picture</h3>
-      <p>Thumbnail caption...</p>
-    </div>
-  </li>
-  <li class="span3">
-    <div class="thumbnail">
-      <img data-src="holder.js/300x200" alt="">
-      <h3>Thumbnail picture</h3>
-      <p>Thumbnail caption...</p>
-    </div>
-  </li>
-      <li class="span3">
-    <div class="thumbnail">
-      <img data-src="holder.js/300x200" alt="">
-      <h3>Thumbnail picture</h3>
-      <p>Thumbnail caption...</p>
-    </div>
-  </li>
-
-</ul>
+@(Html.Kendo().Grid<OBMPDataModel.Partner>()
+      .Name("PartnerList")
+      .DataSource(dataSource => dataSource // Configure the grid data source
+          .Ajax() // Specify that ajax binding is used
+          .Model(model =>
+            {
+                model.Id(p => p.ID); // Specify the property which is the unique identifier of the model
+                model.Field(p => p.ID).Editable(false); // Make the ProductID property not editable
+            })
+          .Read(read => read.Action("AllPartners", "Home")) // Set the action method which will return the data in JSON format
+        
+       )
+      .Columns(columns =>
+      {
+          // Create a column bound to the ID property
+          columns.Bound(p => p.ID).Filterable(false);
+          columns.Bound(p => p.Name);
+          columns.Bound(p => p.MSAReference);
+          columns.Bound(p => p.PartnerType).Title("Type");
+          columns.Bound(p => p.PartnerShare).Title("Share");
+          //columns.Bound(p => p.DateRegistered).Format("{0:d}");
+          columns.Bound(p => p.PrimaryContact);
+      })
+      .Pageable() // Enable paging
+      .Sortable() // Enable sorting
+      .Filterable()      
+)
