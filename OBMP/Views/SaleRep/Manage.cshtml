@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Sales Rep Management";
+}
+
+<ul id="myTab" class="nav nav-tabs">
+    <li class="active"><a href="~/SaleRep/Manage" class="btn-large">Sales Rep List</a></li>
+    <li><a href="~/SaleRep/Add" class="btn-large">Add New Sale Rep</a></li>
+    <li><a href="~/SaleRep/Mapping" class="btn-large">Customer Mapping</a></li>
+</ul>
+
+@(Html.Kendo().Grid<OBMPDataModel.SalesRepresentative>()
+      .Name("PartnerList")
+      .DataSource(dataSource => dataSource // Configure the grid data source
+          .Ajax() // Specify that ajax binding is used
+          .Model(model =>
+            {
+                model.Id(sp => sp.ID); // Specify the property which is the unique identifier of the model
+                model.Field(sp => sp.ID).Editable(false); // Make the ProductID property not editable
+            })
+          .Read(read => read.Action("AllSaleReps", "SaleRep")) // Set the action method which will return the data in JSON format
+          .Update(update => update.Action("Update", "SaleRep"))  // Action invoked when the user saves an updated data item
+       )
+      .Columns(columns =>
+      {
+          // Create a column bound to the ID property
+          columns.Bound(sp => sp.ID).Filterable(false);
+          columns.Bound(sp => sp.Name);
+          columns.Bound(sp => sp.Email);
+          columns.Bound(sp => sp.DateCreated).Format("{0:d}");
+          columns.Command(commands => { commands.Edit(); }).Width(100);
+      })
+      .Pageable() // Enable paging
+      .Sortable() // Enable sorting
+      .Filterable()
+      .Editable(editable => editable.Mode(GridEditMode.PopUp))
+)

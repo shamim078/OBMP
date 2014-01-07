@@ -50,6 +50,30 @@ namespace OBMPDataModel
 			:base(connection, backendConfiguration, metadataSource)
 		{ }
 			
+		public IQueryable<UserProfile> UserProfiles 
+		{
+			get
+			{
+				return this.GetAll<UserProfile>();
+			}
+		}
+		
+		public IQueryable<SalesRepresentative> SalesRepresentatives 
+		{
+			get
+			{
+				return this.GetAll<SalesRepresentative>();
+			}
+		}
+		
+		public IQueryable<SaleRepCustomer> SaleRepCustomers 
+		{
+			get
+			{
+				return this.GetAll<SaleRepCustomer>();
+			}
+		}
+		
 		public IQueryable<Product> Products 
 		{
 			get
@@ -117,6 +141,18 @@ namespace OBMPDataModel
 	
 	public interface IFluentModelUnitOfWork : IUnitOfWork
 	{
+		IQueryable<UserProfile> UserProfiles
+		{
+			get;
+		}
+		IQueryable<SalesRepresentative> SalesRepresentatives
+		{
+			get;
+		}
+		IQueryable<SaleRepCustomer> SaleRepCustomers
+		{
+			get;
+		}
 		IQueryable<Product> Products
 		{
 			get;

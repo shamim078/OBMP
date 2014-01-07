@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "Sales Rep Management";
+}
+
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+
+<ul id="myTab" class="nav nav-tabs">
+    <li><a href="~/SaleRep/Manage" class="btn-large">Sales Rep List</a></li>
+    <li><a href="~/SaleRep/Add" class="btn-large">Add New Sale Rep</a></li>
+    <li class="active"><a href="~/SaleRep/Mapping" class="btn-large">Customer Mapping</a></li>
+</ul>
+
+
+<div class="form-horizontal well">
+
+    <div class="row">
+        <div class="span4">
+            <div class="control-group">
+                <label class="control-label" for="saleRep">Select sale rep</label>
+                <div class="controls">
+                    @(Html.Kendo().DropDownList()
+                            .Name("saleRep")
+                            .OptionLabel("All")
+                            .DataTextField("Name")
+                            .DataValueField("ID")
+                            .AutoBind(false)
+                            .Events(e => e.Change("SaleRepChange"))
+                            .DataSource(ds =>
+                            {
+                                ds.Read("GetSaleRep", "SaleRep");
+                            })
+                        )
+
+                </div>
+            </div>
+        </div>
+        <div class="span4">
+            @(Html.Kendo().Button()
+                .Name("kendoIconTextButton")
+                .Tag("a")
+                .Icon("plus")
+                .Content("Create New Mapping")
+                .Events(ev => ev.Click("ShowNewMappingWindow"))
+                )
+        </div>
+    </div>
+</div>
+
+
+@(Html.Kendo().Window()
+    .Name("window")
+    .Title("Create New Mapping")
+    .Content("loading data...")
+    .LoadContentFrom("CreateMapping", "SaleRep")
+    .Draggable()
+    .Resizable()
+    .Width(400)
+    .Height(300)
+    .Visible(false)
+)
+
+
+
+
+
+@(Html.Kendo().Grid<OBMP.Models.CustomerSaleRep>()
+    .Name("customerList")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.ID);
+        columns.Bound(c => c.UID).Width(300);
+        columns.Bound(c => c.Name);
+        columns.Bound(c => c.AccountReference);
+        columns.Bound(c => c.ContactPerson);
+        columns.Bound(c => c.SaleRepID).Visible(false);
+    })
+
+    //.HtmlAttributes(new { style = "height: 430px" })
+    .Scrollable()
+    .Pageable()
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .ServerOperation(false)
+        .Model(model => model.Id(c => c.ID))
+        .Read("CustomerMapping", "SaleRep")
+        .Create(create => create.Action(/* action */"Products_Create", /* controller */ "Home"))
+    )
+)
+
+
+
+<script>
+    function SaleRepChange() {
+        var value = this.value(),
+		 	 grid = $("#customerList").data("kendoGrid");
+
+        if (value) {
+            grid.dataSource.filter({ field: "SaleRepID", operator: "eq", value: parseInt(value) });
+        } else {
+            grid.dataSource.filter({});
+        }
+    }
+
+    function ShowNewMappingWindow(e) {
+        
+        $("#window").data("kendoWindow").open();
+    }
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+</script>
+
+
+
+@if (TempData["Success"] != null && TempData["Success"].ToString()=="true") {
+                    
+                        <script>
+
+                            (function () {
+                                toastr.success('Customer sale representative mapping saved successfully :)');
+
+                            })();
+                        </script>
+                }
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "false")
+{
+                    
+                        <script>
+                            (function () {
+                                toastr.error('Some erroe occured :(');
+                            })();
+                        </script>
+                }
+
+
+
+<style scoped="scoped">
+    #grid .k-toolbar {
+        min-height: 27px;
+        padding: 1.3em;
+    }
+
+    .saleRep-label {
+        vertical-align: middle;
+        padding-right: .5em;
+    }
+
+    #saleRep {
+        vertical-align: middle;
+    }
+
+    .toolbar {
+        float: right;
+    }
+
+    #example {
+        min-height: 340px;
+    }
+                
+    #undo {
+        position: absolute;
+    }
+
+</style>

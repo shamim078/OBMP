@@ -133,34 +133,12 @@ namespace OBMP.Controllers
             return Json(new[] { customer }.ToDataSourceResult(request, ModelState));
         }
 
-        //// parse the incoming request from Kendo UI into a DataSourceRequest
-        //public JsonResult GetProducts([DataSourceRequest]DataSourceRequest request)
-        //{
+        public ActionResult GetCustomers()
+        {
 
-        //    // LINQ query to select products and map to model objects
-        //    var products = _context.Products.Select(p => new Models.Product
-        //    {
-        //        Id = p.ProductID,
-        //        Name = p.ProductName,
-        //        UnitsInStock = p.UnitsInStock,
-        //        UnitPrice = p.UnitPrice,
-        //        Discontinued = p.Discontinued,
-        //        Supplier = new Models.Supplier
-        //        {
-        //            Id = p.Supplier.SupplierID,
-        //            Name = p.Supplier.CompanyName
-        //        },
-        //        Category = new Models.Category
-        //        {
-        //            Id = p.Category.CategoryID,
-        //            Name = p.Category.CategoryName
-        //        }
-        //    });
+            var saleRep = this.dbContext.Customers.OrderBy(c => c.Name);
 
-        //    // convert to a DataSourceResponse and send back as JSON
-        //    //return this.Json(products.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
-        //    return this.Json(products.ToDataSourceResult(request));
-
-        //}
+            return Json(saleRep, JsonRequestBehavior.AllowGet);
+        }
     }
 }

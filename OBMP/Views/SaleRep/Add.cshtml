@@ -1,0 +1,112 @@
+﻿@model OBMPDataModel.SalesRepresentative
+
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+
+@{
+    ViewBag.Title = "Sales Rep Management";
+}
+
+<ul id="myTab" class="nav nav-tabs">
+    <li><a href="~/SaleRep/Manage" class="btn-large">Sales Rep List</a></li>
+    <li class="active"><a href="~/SaleRep/Add" class="btn-large">Add New Sale Rep</a></li>
+    <li><a href="~/SaleRep/Mapping" class="btn-large">Customer Mapping</a></li>
+</ul>
+
+<script>
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+</script>
+
+@if (TempData["Success"] != null && TempData["Success"].ToString()=="true") {
+                    
+                        <script>
+
+                            (function () {
+                                toastr.success('Customer data saved successfully :)');
+
+                            })();
+                        </script>
+                }
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "false")
+{
+                    
+                        <script>
+                            (function () {
+                                toastr.error('Some erroe occured :(');
+                            })();
+                        </script>
+                }
+
+
+
+<section class="well">
+
+    @using (Html.BeginForm("Add", "SaleRep", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="row">
+
+            <div class="span8">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.DateCreated, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.Kendo().DatePickerFor(model => model.DateCreated)
+                        @Html.ValidationMessageFor(model => model.DateCreated)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p class="pull-right">
+            <input type="submit" value="Save Data" class="btn btn-primary" />
+            <input type="reset" value="Reset Data" class="btn"  />
+        </p>
+    
+    }
+
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

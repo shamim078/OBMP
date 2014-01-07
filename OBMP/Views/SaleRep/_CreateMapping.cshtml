@@ -1,0 +1,67 @@
+﻿<div class="well">
+
+    <br />
+
+        @using (Html.BeginForm("CreateMapping", "SaleRep", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+@(Html.Kendo().ComboBox()
+          .Name("SaleRep")
+          .DataTextField("Name")
+          .DataValueField("ID")
+          .HtmlAttributes(new { style = "width:250px" })
+          .Filter("contains")
+          .AutoBind(false)
+          .MinLength(3)
+          .Placeholder("Select Sale Rep")
+          .DataSource(source => {
+              source.Read(read =>
+              {
+                  read.Action("GetSaleRep", "SaleRep");
+              })
+              .ServerFiltering(false);
+          })
+    )
+
+
+<hr />
+
+
+
+    @(Html.Kendo().ComboBox()
+          .Name("Customer")
+          .DataTextField("Name")
+          .DataValueField("ID")
+          .HtmlAttributes(new { style = "width:250px" })
+          .Filter("contains")
+          .AutoBind(false)
+          .MinLength(3)
+          .Placeholder("Select Customer")
+          .DataSource(source => {
+              source.Read(read =>
+              {
+                  read.Action("GetCustomers", "Customer");
+              })
+              .ServerFiltering(false);
+          })
+                   
+          .Template("<span class=\"k-state-default\"><strong>#: data.Name #</strong> </span>" +
+                    "<span class=\"k-state-default\"><p>#: data.Address #<p></span>")
+   
+    )
+            <br />
+            <br />
+            
+        <p >
+            <br />
+            <input type="submit" value="Save Data" class="btn btn-primary" />            
+        </p>            
+
+    }
+
+    <br />
+    
+
+    </div> 

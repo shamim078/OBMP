@@ -182,6 +182,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SaleRepController.cs" />
     <Compile Include="Data\Category.cs">
       <DependentUpon>Northwind.tt</DependentUpon>
     </Compile>
@@ -221,6 +222,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CustomerSaleRep.cs" />
     <Compile Include="Models\CustomerList.cs" />
     <Compile Include="Models\PartnerList.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -235,7 +237,6 @@
     <Content Include="Content\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
     <Content Include="Content\bootstrap\css\bootstrap.min.css" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\bootstrap\js\bootstrap.js" />
@@ -582,9 +583,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\html5shiv.js" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\kendo\2013.3.1119\images\kendoui.ttf" />
     <Content Include="Content\kendo\2013.3.1119\images\kendoui.woff" />
     <EntityDeploy Include="Data\Northwind.edmx">
@@ -896,6 +894,10 @@
     <Content Include="Views\Product\Add.cshtml" />
     <Content Include="Views\Product\Share.cshtml" />
     <Content Include="Views\Customer\Add.cshtml" />
+    <Content Include="Views\SaleRep\Manage.cshtml" />
+    <Content Include="Views\SaleRep\Add.cshtml" />
+    <Content Include="Views\SaleRep\Mapping.cshtml" />
+    <Content Include="Views\SaleRep\_CreateMapping.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -31,6 +31,15 @@ namespace OBMPDataModel
 		{
 			List<MappingConfiguration> mappingConfigurations = new List<MappingConfiguration>();
 			
+			MappingConfiguration<UserProfile> userprofileConfiguration = this.GetUserProfileMappingConfiguration();
+			mappingConfigurations.Add(userprofileConfiguration);
+			
+			MappingConfiguration<SalesRepresentative> salesrepresentativeConfiguration = this.GetSalesRepresentativeMappingConfiguration();
+			mappingConfigurations.Add(salesrepresentativeConfiguration);
+			
+			MappingConfiguration<SaleRepCustomer> salerepcustomerConfiguration = this.GetSaleRepCustomerMappingConfiguration();
+			mappingConfigurations.Add(salerepcustomerConfiguration);
+			
 			MappingConfiguration<Product> productConfiguration = this.GetProductMappingConfiguration();
 			mappingConfigurations.Add(productConfiguration);
 			
@@ -61,6 +70,73 @@ namespace OBMPDataModel
 			container.DefaultNamespace = "OBMPDataModel";
 			container.NameGenerator.SourceStrategy = Telerik.OpenAccess.Metadata.NamingSourceStrategy.Property;
 			container.NameGenerator.RemoveCamelCase = false;
+		}
+		public MappingConfiguration<UserProfile> GetUserProfileMappingConfiguration()
+		{
+			MappingConfiguration<UserProfile> configuration = this.GetUserProfileClassConfiguration();
+			this.PrepareUserProfilePropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<UserProfile> GetUserProfileClassConfiguration()
+		{
+			MappingConfiguration<UserProfile> configuration = new MappingConfiguration<UserProfile>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("UserProfile");
+	
+			return configuration;
+		}
+	
+		public void PrepareUserProfilePropertyConfigurations(MappingConfiguration<UserProfile> configuration)
+		{
+			configuration.HasProperty(x => x.UserId).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_userId").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("UserId").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.UserName).HasFieldName("_userName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("UserName").IsNullable().HasColumnType("nvarchar(max)").HasLength(0);
+		}
+		public MappingConfiguration<SalesRepresentative> GetSalesRepresentativeMappingConfiguration()
+		{
+			MappingConfiguration<SalesRepresentative> configuration = this.GetSalesRepresentativeClassConfiguration();
+			this.PrepareSalesRepresentativePropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<SalesRepresentative> GetSalesRepresentativeClassConfiguration()
+		{
+			MappingConfiguration<SalesRepresentative> configuration = new MappingConfiguration<SalesRepresentative>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("SalesRepresentative");
+	
+			return configuration;
+		}
+	
+		public void PrepareSalesRepresentativePropertyConfigurations(MappingConfiguration<SalesRepresentative> configuration)
+		{
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.Name).HasFieldName("_name").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Name").IsNullable().HasColumnType("nvarchar").HasLength(50);
+			configuration.HasProperty(x => x.Email).HasFieldName("_email").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Email").IsNullable().HasColumnType("nvarchar").HasLength(50);
+			configuration.HasProperty(x => x.DateCreated).HasFieldName("_dateCreated").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("DateCreated").IsNullable().HasColumnType("date");
+		}
+		public MappingConfiguration<SaleRepCustomer> GetSaleRepCustomerMappingConfiguration()
+		{
+			MappingConfiguration<SaleRepCustomer> configuration = this.GetSaleRepCustomerClassConfiguration();
+			this.PrepareSaleRepCustomerPropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<SaleRepCustomer> GetSaleRepCustomerClassConfiguration()
+		{
+			MappingConfiguration<SaleRepCustomer> configuration = new MappingConfiguration<SaleRepCustomer>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("SaleRepCustomer");
+	
+			return configuration;
+		}
+	
+		public void PrepareSaleRepCustomerPropertyConfigurations(MappingConfiguration<SaleRepCustomer> configuration)
+		{
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.SalesRepresentativeID).HasFieldName("_salesRepresentativeID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesRepresentativeID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.CustomerID).HasFieldName("_customerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("CustomerID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.MappedDate).HasFieldName("_mappedDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("MappedDate").IsNullable().HasColumnType("date");
 		}
 		public MappingConfiguration<Product> GetProductMappingConfiguration()
 		{
