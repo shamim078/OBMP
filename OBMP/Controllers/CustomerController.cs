@@ -136,9 +136,22 @@ namespace OBMP.Controllers
         public ActionResult GetCustomers()
         {
 
-            var saleRep = this.dbContext.Customers.OrderBy(c => c.Name);
+            //var saleRep = this.dbContext.Customers.OrderBy(c => c.Name);
 
-            return Json(saleRep, JsonRequestBehavior.AllowGet);
+            var customers = dbContext.Customers.Select(c => new Models.CustomerList
+            {
+                ID = c.ID,
+                UID = c.UID,
+                Name = c.Name,
+                AccountReference = c.AccountReference,
+                Address = c.Address,
+                ContactPerson = c.ContactPerson,
+                ContactDetail = c.ContactDetail
+            });
+
+            customers = customers.OrderBy(c => c.Name);
+
+            return Json(customers, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,0 +1,252 @@
+﻿@model OBMPDataModel.OrderDetail
+
+@{
+    ViewBag.Title = "Order Management";
+}
+
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+
+
+
+<ul id="myTab" class="nav nav-tabs">
+    <li><a href="~/Order/Create" class="btn-large">Create Order</a></li>
+    <li  class="active"><a href="~/Order/AddProduct" class="btn-large">Add Product</a></li>
+    <li><a href="~/Order/Manage"  class="btn-large">Manage Order</a></li>
+</ul>
+
+<script>
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+</script>
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "true")
+{
+                    
+                        <script>
+
+                            (function () {
+                                toastr.success('Order data saved successfully :)');
+
+                            })();
+                        </script>
+}
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "false")
+{
+                    
+                        <script>
+                            (function () {
+                                toastr.error('Some erroe occured :(');
+                            })();
+                        </script>
+}
+
+
+
+<div class="well">
+
+@*    @using (Html.BeginForm("AddProduct", "Order", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+                *@<div class="row form-horizontal">
+
+            <div class="span8">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.SalesOrderID, "Select Order", new { @class = "control-label" })
+
+                    <div class="controls">
+
+                        @(Html.Kendo().ComboBoxFor(model => model.SalesOrderID)
+                              .DataTextField("OrderTitle")
+                              .DataValueField("OrderID")
+                              .HtmlAttributes(new { style = "width:350px" })
+                              .Filter("contains")
+                              .AutoBind(false)
+                              .MinLength(3)
+                              .Placeholder("Select Order")
+                              .DataSource(source =>
+                              {
+                                  source.Read(read =>
+                                  {
+                                      read.Action("GetActivePendingOrders", "Order");
+                                  })
+                                  .ServerFiltering(false);
+                              })
+                               .HeaderTemplate("<div class=\"dropdown-header\">" +
+                                                    "<span class=\"k-widget k-header\">ID</span>" +
+                                                    "<span class=\"k-widget k-header\">Customer</span>" +
+                                                    "<span class=\"k-widget k-header\">Sales Rep</span>" +
+                                                    "<span class=\"k-widget k-header\">Status</span>" +
+
+                                                "</div>")
+                              .Template("<span class=\"k-state-default\"><strong>#: data.OrderID #</strong> </span>" + " | " +
+                                        
+                                        "<span class=\"k-state-default\">#: data.Customer # </span>" +" | " +
+                                        "<span class=\"k-state-default\">#: data.SalesRep # </span>" +" | " +
+                                        "<span class=\"k-state-default\">#: data.Status #</span>"
+                                        )
+                        )
+                    </div>
+                </div>
+
+                            </div>
+
+        </div>
+
+    
+@*    }*@
+
+</div>
+
+<div class="well">
+
+    <div class="row form-horizontal">
+
+        <div class="span4">
+            
+            <div class="control-group">
+                                   
+                    <label class="control-label" for="ProductID">Product</label>
+
+                    <div class="controls">
+
+                                @(Html.Kendo().ComboBox()
+                            .Name("ProductID")
+                            .DataTextField("Name")
+                            .DataValueField("ID")
+                            .Placeholder("Select Product")
+                            .AutoBind(false)
+                            //.Events(e => e.Change("SaleRepChange"))
+                            .DataSource(ds =>
+                            {
+                                ds.Read("GetProducts", "Product");
+                            })
+                        )
+
+                    </div>
+               </div>             
+
+            
+            <div class="control-group">
+                                   
+                    <label class="control-label" for="Quantity">Quantity</label>
+
+                    <div class="controls">
+
+                        <input class="input-mini" type="text" id="Quantity" value="1">
+                    </div>
+                </div>
+
+        </div>
+
+        <div class="span4">
+
+        <p>
+            <br />
+
+            <input type="submit" value="Add to selected order" class="btn btn-primary" />
+            
+        </p>            
+
+        </div>
+
+
+    </div>
+
+                <div class="row">
+
+            <div class="span8">
+
+
+
+                </div>
+                    </div>
+
+</div>
+
+
+<div class="well">
+
+          <div class="row">
+
+            <div class="span8">
+
+                                        <h3>place holder for kendo ui grid</h3>
+
+                </div>
+                        </div>
+
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<style>
+    .dropdown-header {
+        font-size: 1.2em;
+    }
+
+    .dropdown-header > span {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        text-align: left;
+        display: inline-block;
+        border-style: solid;
+        border-width: 0 0 1px 1px;
+        padding: .3em .6em;
+        /*width: 312px;*/
+    }
+
+    .dropdown-header > span:first-child {
+        /*width: 82px;*/
+        border-left-width: 0;
+    }
+
+
+    #CustomerID {
+        padding-bottom: 26px;
+    }
+
+    #CustomerID .k-item > span{
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: inline-block;
+        border-style: solid;
+        border-width: 0 0 1px 1px;
+        vertical-align: top;
+        min-height: 95px;
+        width: 79%;
+        padding: .6em 0 0 .6em;
+    }
+
+    #CustomerID .k-item > span:first-child{
+        width: 77px;
+        border-left-width: 0;
+        padding: .6em 0 0 0;
+    }
+
+</style>

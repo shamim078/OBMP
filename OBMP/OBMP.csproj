@@ -222,8 +222,11 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\OrderDetailList.cs" />
     <Compile Include="Models\CustomerSaleRep.cs" />
     <Compile Include="Models\CustomerList.cs" />
+    <Compile Include="Models\OrderList.cs" />
+    <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\PartnerList.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Order.cs" />
@@ -898,6 +901,10 @@
     <Content Include="Views\SaleRep\Add.cshtml" />
     <Content Include="Views\SaleRep\Mapping.cshtml" />
     <Content Include="Views\SaleRep\_CreateMapping.cshtml" />
+    <Content Include="Views\Order\Manage.cshtml" />
+    <Content Include="Views\Order\AddProduct.cshtml" />
+    <Content Include="Views\Order\Create.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ProductDropDown.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,312 @@
+﻿@model OBMP.Models.OrderModel 
+
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+
+@{
+    ViewBag.Title = "Order Management";
+}
+
+    <script>
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+</script>
+
+<ul id="myTab" class="nav nav-tabs">
+    <li class="active"><a href="~/Order/Create" class="btn-large">Create Order</a></li>
+    <li><a href="~/Order/Manage" class="btn-large">Manage Order</a></li>
+</ul>
+
+
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "true")
+{
+                    
+    <script>
+
+        (function () {
+            toastr.success('Order data saved successfully :)');
+
+        })();
+    </script>
+}
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "false")
+{
+                    
+    <script>
+        (function () {
+            toastr.error('Some erroe occured :(');
+        })();
+    </script>
+}
+
+
+@using (Html.BeginForm("Create", "Order", FormMethod.Post, new { @class = "form-horizontal", @id="OrderModel" }))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="well">
+
+        <div class="row">
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.OrderID, "Order ID", new { @class = "control-label" })
+
+                    <div class="controls">
+                        @*@Html.Kendo().IntegerTextBox().Name("OrderID").Placeholder("Auto Generated").Enable(false)*@
+                        <span class="input-medium uneditable-input">Auto Generated</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Status, "Order Status", new { @class = "control-label" })
+
+                    <div class="controls">
+                        <span class="input-medium uneditable-input">Open</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.OrderDate, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.Kendo().DatePickerFor(model => model.OrderDate).Value(DateTime.Today).Format("yyyy-MM-dd").Enable(false).
+                        @Html.ValidationMessageFor(model => model.OrderDate)
+                    </div>
+                </div>
+
+            </div>
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.DueDate, new { @class = "control-label" })
+
+                    <div class="controls">
+                        @Html.Kendo().DatePickerFor(model => model.DueDate).Value(DateTime.Today.AddDays(7)).Format("yyyy-MM-dd")
+                        @Html.ValidationMessageFor(model => model.DueDate)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="span4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.CustomerID, "Customer", new { @class = "control-label" })
+
+                    <div class="controls">
+
+                        @(Html.Kendo().DropDownList()
+                              .Name("CustomerID")
+                              .DataTextField("Name")
+                              .DataValueField("ID")
+                              .DataSource(source =>
+                              {
+                                  source.Read(read =>
+                                  {
+                                      read.Action("GetCustomers", "Customer");
+                                  });
+                                  
+                              })
+
+                              .Template("<span class=\"k-state-default\"><strong>#: data.Name #</strong> </span>" +
+                                        "<span class=\"k-state-default\"><p>#: data.Address #<p></span>")
+                                                                    
+                        )
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="span4">
+                <div class="control-group">
+
+                    @Html.LabelFor(model => model.SalesRepID, "Sales Person", new { @class = "control-label" })
+
+                    <div class="controls">
+                        @(Html.Kendo().DropDownList()
+                                    .Name("SalesRepID")
+                                  .DataTextField("Name")
+                                  .DataValueField("ID")
+                                  .DataSource(source =>
+                                  {
+                                      source.Read(read =>
+                                      {
+                                          read.Action("GetSaleRep", "SaleRep");
+                                      });
+                                  })
+
+                            )
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="well">
+
+        <div class="row">
+
+            <div class="span8">
+
+
+                @(Html.Kendo().Grid<OBMP.Models.OrderDetailList>()
+      .Name("OrderDetailLists")
+      .ToolBar(tools => tools.Create().Text("Add new product"))
+      .Editable(editable => editable.Mode(GridEditMode.InCell).CreateAt(GridInsertRowPosition.Bottom))
+      .DataSource(dataSource => dataSource // Configure the grid data source
+          .Ajax()
+          //.Read(r => r.Action("GetOrderDetail", "Order"))
+          .Model(model =>
+            {
+                model.Id(od => od.OrderDetailID);
+                model.Field(od => od.ProductID);
+            })
+            .ServerOperation(false)
+       )
+      .Columns(columns =>
+      {
+          columns.Bound(od => od.OrderDetailID).Visible(false);
+
+          columns.ForeignKey(od => od.ProductID, (System.Collections.IEnumerable)ViewData["products"],
+    "ID", "Name").EditorTemplateName("ProductDropDown").Title("Product");
+
+          //columns.Bound(od => od.ProductID).EditorTemplateName("ProductDropDown").Title("Product");
+          
+
+          columns.Bound(od => od.UnitPrice).EditorTemplateName("Number");
+          columns.Bound(od => od.OrderQuantity).EditorTemplateName("Integer");
+
+        
+          
+          columns.Command(command => command.Destroy()).Width(100);
+      })
+      
+
+)
+
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="span8">
+
+                <hr />
+
+                <p class="pull-right">
+
+                    <input type="submit" value="Save Order" class="btn btn-primary" id="submitButton" onclick="showData()" />
+                    <input type="reset" value="Cancel Order" class="btn" />
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+        
+
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+        function index(dataItem) {
+            var data = $("#OrderDetailLists").data("kendoGrid").dataSource.data();
+
+            return data.indexOf(dataItem);
+        }
+
+        function showData() {
+
+            var gview = $('#OrderDetailLists').data('kendoGrid');
+            var items = gview.dataSource.data();
+
+            for (i = 0; i < items.length; i++) {
+
+                var item = items[i];
+                var inputElement1 = "<input type='hidden' name='OrderDetailLists[" + i.toString() + "].ProductID'" + "value='" + item.ProductID + "' />";
+                var inputElement2 = "<input type='hidden' name='OrderDetailLists[" + i.toString() + "].UnitPrice'" + "value='" + item.UnitPrice + "' />";
+                var inputElement3 = "<input type='hidden' name='OrderDetailLists[" + i.toString() + "].OrderQuantity'" + "value='" + item.OrderQuantity + "' />";
+
+                $('#OrderModel').append(inputElement1).append(inputElement2).append(inputElement3);
+
+            }
+        }
+
+
+        $(function () {
+
+            //$("#OrderDetailLists").data('kendoGrid').dataSource.data([]);
+
+            //Selecting Grid
+            //var gview = $('#OrderDetailLists').data('kendoGrid');
+            //Getting selected row
+            //var dataItem = gview.dataItem(gview.select());
+            //Removing Selected row
+            // gview.dataSource.remove(dataItem);
+            //Removing row using index number
+            //gview.dataSource.remove(0);// 0 is row index
+
+            //var dataItem = gview.dataItem($(this).closest("tr"));
+
+            //gview.dataSource.remove(dataItem);
+            //gview.remove.dataItem[0];
+            
+            
+
+            //var items = gview.dataSource.data();
+            //alert(items.length);
+            //gview.dataSource.remove(item[0]);
+            //for (i = 0; i < items.length; i++) {
+            //    var item = items[i];
+            //    alert(item.OrderDetailID);
+            //}
+
+        });
+
+
+</script>
+}

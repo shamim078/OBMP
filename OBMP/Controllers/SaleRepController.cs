@@ -113,16 +113,6 @@ namespace OBMP.Controllers
 
         public ActionResult CustomerMapping([DataSourceRequest]DataSourceRequest request)
         {
-            //var customers = dbContext.Customers.Select(c => new Models.CustomerList
-            //{
-            //    ID = c.ID,
-            //    UID = c.UID,
-            //    Name = c.Name,
-            //    AccountReference = c.AccountReference,
-            //    Address = c.Address,
-            //    ContactPerson = c.ContactPerson,
-            //    ContactDetail = c.ContactDetail
-            //});
 
             IList<Models.CustomerSaleRep> customerSaleRepList = new List<Models.CustomerSaleRep>();
             Models.CustomerSaleRep newCustomerSaleRep; 

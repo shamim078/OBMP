@@ -205,7 +205,7 @@ namespace OBMPDataModel
 	
 		public void PreparePaymentPropertyConfigurations(MappingConfiguration<Payment> configuration)
 		{
-			configuration.HasProperty(x => x.ID).IsIdentity().HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+            configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.SalesOrderID).HasFieldName("_salesOrderID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.PartnerID).HasFieldName("_partnerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PartnerID").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.PaymentDate).HasFieldName("_paymentDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PaymentDate").IsNullable().HasColumnType("datetime");
@@ -285,7 +285,7 @@ namespace OBMPDataModel
 		public void PrepareOrderDetailPropertyConfigurations(MappingConfiguration<OrderDetail> configuration)
 		{
 			configuration.HasProperty(x => x.SalesOrderID).HasFieldName("_salesOrderID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
-			configuration.HasProperty(x => x.SalesOrderDetailID).IsIdentity().HasFieldName("_salesOrderDetailID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderDetailID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+            configuration.HasProperty(x => x.SalesOrderDetailID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_salesOrderDetailID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderDetailID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.CustomerID).HasFieldName("_customerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("CustomerID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.PartnerID).HasFieldName("_partnerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PartnerID").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.ProductID).HasFieldName("_productID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ProductID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
@@ -330,7 +330,7 @@ namespace OBMPDataModel
 	
 		public void PrepareOrderPropertyConfigurations(MappingConfiguration<Order> configuration)
 		{
-			configuration.HasProperty(x => x.ID).IsIdentity().HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+            configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.OrderDate).HasFieldName("_orderDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("OrderDate").IsNullable().HasColumnType("datetime");
 			configuration.HasProperty(x => x.DueDate).HasFieldName("_dueDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("DueDate").IsNullable().HasColumnType("datetime");
 			configuration.HasProperty(x => x.Status).HasFieldName("_status").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Status").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
@@ -410,7 +410,7 @@ namespace OBMPDataModel
 	
 		public void PrepareBillingPropertyConfigurations(MappingConfiguration<Billing> configuration)
 		{
-			configuration.HasProperty(x => x.ID).IsIdentity().HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+            configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.SalesOrderID).HasFieldName("_salesOrderID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.SalesOrderDetailID).HasFieldName("_salesOrderDetailID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderDetailID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.CustomerID).HasFieldName("_customerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("CustomerID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
