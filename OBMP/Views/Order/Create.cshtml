@@ -96,7 +96,7 @@
                     @Html.LabelFor(model => model.OrderDate, new { @class = "control-label" })
 
                     <div class="controls">
-                        @Html.Kendo().DatePickerFor(model => model.OrderDate).Value(DateTime.Today).Format("yyyy-MM-dd").Enable(false).
+                        @Html.Kendo().DatePickerFor(model => model.OrderDate).Value(DateTime.Today).Format("yyyy-MM-dd").Enable(false)
                         @Html.ValidationMessageFor(model => model.OrderDate)
                     </div>
                 </div>
@@ -176,11 +176,6 @@
         </div>
     </div>
 
-    <div class="well">
-
-        <div class="row">
-
-            <div class="span8">
 
 
                 @(Html.Kendo().Grid<OBMP.Models.OrderDetailList>()
@@ -218,29 +213,22 @@
 
 )
 
+<br />
 
-            </div>
+    <div class="well">
 
-        </div>
+        <div class="pull-right">
 
-        <div class="row">
+                
 
-            <div class="span8">
-
-                <hr />
-
-                <p class="pull-right">
+                @*<p class="pull-right">*@
 
                     <input type="submit" value="Save Order" class="btn btn-primary" id="submitButton" onclick="showData()" />
                     <input type="reset" value="Cancel Order" class="btn" />
-                </p>
-
-            </div>
+                @*</p>*@
 
         </div>
-
-
-
+            
 
     </div>
         
@@ -275,38 +263,6 @@
 
             }
         }
-
-
-        $(function () {
-
-            //$("#OrderDetailLists").data('kendoGrid').dataSource.data([]);
-
-            //Selecting Grid
-            //var gview = $('#OrderDetailLists').data('kendoGrid');
-            //Getting selected row
-            //var dataItem = gview.dataItem(gview.select());
-            //Removing Selected row
-            // gview.dataSource.remove(dataItem);
-            //Removing row using index number
-            //gview.dataSource.remove(0);// 0 is row index
-
-            //var dataItem = gview.dataItem($(this).closest("tr"));
-
-            //gview.dataSource.remove(dataItem);
-            //gview.remove.dataItem[0];
-            
-            
-
-            //var items = gview.dataSource.data();
-            //alert(items.length);
-            //gview.dataSource.remove(item[0]);
-            //for (i = 0; i < items.length; i++) {
-            //    var item = items[i];
-            //    alert(item.OrderDetailID);
-            //}
-
-        });
-
 
 </script>
 }

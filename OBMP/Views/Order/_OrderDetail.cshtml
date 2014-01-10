@@ -1,0 +1,16 @@
+﻿@model IEnumerable<OBMP.Models.OrderDetailList>
+
+<div class="well">
+
+@(Html.Kendo().Grid(Model)
+    .Name("OrderDetail")
+    
+    .Columns(c => {
+    c.Bound(o => o.OrderDetailID);
+    c.Bound(o => o.ProductName);
+    c.Bound(o => o.UnitPrice); 
+    c.Bound(o => o.OrderQuantity); 
+    })
+)
+
+</div>

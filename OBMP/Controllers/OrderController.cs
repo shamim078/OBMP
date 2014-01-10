@@ -136,7 +136,55 @@ namespace OBMP.Controllers
 
         }
 
+        public ActionResult OrderDetail(long orderID)
+        {
+            IList<Models.OrderDetailList> orderDetailList = new List<Models.OrderDetailList>();
+            Models.OrderDetailList newOrderDetailList;
 
+            using (IDbConnection oaConnection = dbContext.Connection)
+            {
+                string SqlQueryString = "SELECT OrderDetail.SalesOrderDetailID, OrderDetail.SalesOrderID, OrderDetail.ProductID, Product.Name,  ";
+                SqlQueryString = SqlQueryString + " OrderDetail.UnitPrice, OrderDetail.OrderQuantity, OrderDetail.LineTotal, OrderDetail.CustomerID,  ";
+                SqlQueryString = SqlQueryString + " OrderDetail.PartnerID FROM OrderDetail INNER JOIN ";
+                SqlQueryString = SqlQueryString + " Product ON OrderDetail.ProductID = Product.ID ";
+                SqlQueryString = SqlQueryString + " WHERE OrderDetail.SalesOrderID="+orderID.ToString();
+
+                using (IDbCommand oaCommand = oaConnection.CreateCommand())
+                {
+                    oaCommand.CommandText = SqlQueryString;
+                    using (IDataReader reader = oaCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            newOrderDetailList = new Models.OrderDetailList();
+
+                            newOrderDetailList.OrderDetailID = reader.GetInt64(0);
+                            //newOrderDetailList.OrderID = reader.GetInt64(1);
+                            //newOrderDetailList.OrderTitle = string.Format("OrderID={0}, Customer={1}", reader.GetInt64(0), reader.GetString(3));
+                            newOrderDetailList.ProductID = reader.GetInt64(2);
+                            newOrderDetailList.ProductName = reader.GetString(3);
+
+                            newOrderDetailList.UnitPrice = reader.IsDBNull(4) ? 0 : reader.GetDecimal(4);
+                            newOrderDetailList.OrderQuantity = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
+                            newOrderDetailList.LineTotal = reader.IsDBNull(6) ? 0 : reader.GetDecimal(6);
+
+
+                            orderDetailList.Add(newOrderDetailList);
+                        }
+
+
+                    }
+                }
+            }
+
+            var orderDetail = orderDetailList.AsQueryable();
+
+
+            return PartialView("_OrderDetail", orderDetail);
+        }
+
+
+        #region old code
         //
         // GET: /Order/All
 
@@ -177,6 +225,8 @@ namespace OBMP.Controllers
         {
             return View();
         }
+
+       
 
         // parse the incoming request from Kendo UI into a DataSourceRequest
         public JsonResult GetAllProducts([DataSourceRequest]DataSourceRequest request)
@@ -349,7 +399,9 @@ namespace OBMP.Controllers
 
         }
 
-        public ActionResult GetActivePendingOrders()
+        #endregion
+
+        public ActionResult GetActivePendingOrders([DataSourceRequest]DataSourceRequest request)
         {
             IList<Models.OrderList> orderList = new List<Models.OrderList>();
             Models.OrderList newOrderList;
@@ -359,7 +411,7 @@ namespace OBMP.Controllers
                 string SqlQueryString = "SELECT [Order].ID, [Order].OrderDate, [Order].DueDate, Customer.Name, Customer.AccountReference, Customer.UID,  ";
                 SqlQueryString = SqlQueryString + " SalesRepresentative.Name AS SaleRep, OrderStatusCode.Title FROM [Order] INNER JOIN ";
                 SqlQueryString = SqlQueryString + " Customer ON [Order].CustomerID = Customer.ID INNER JOIN SalesRepresentative ON [Order].SalesPersonID=SalesRepresentative.ID ";
-                SqlQueryString = SqlQueryString + " INNER JOIN OrderStatusCode ON [Order].Status = OrderStatusCode.ID WHERE ([Order].Status = 1) ";
+                SqlQueryString = SqlQueryString + " INNER JOIN OrderStatusCode ON [Order].Status = OrderStatusCode.ID WHERE ([Order].Status = 1) ORDER BY [Order].OrderDate DESC ";
 
                 using (IDbCommand oaCommand = oaConnection.CreateCommand())
                 {
@@ -389,7 +441,9 @@ namespace OBMP.Controllers
             var orders = orderList.AsQueryable();
 
 
-            return Json(orders, JsonRequestBehavior.AllowGet);
+            //return Json(orders, JsonRequestBehavior.AllowGet);
+
+            return this.Json(orders.ToDataSourceResult(request));
         }
 
         public JsonResult GetOrderDetail([DataSourceRequest]DataSourceRequest request)

@@ -6,3 +6,74 @@
     <li><a href="~/Order/Create" class="btn-large">Create Order</a></li>
     <li  class="active"><a href="~/Order/Manage"  class="btn-large">Manage Order</a></li>
 </ul>
+
+
+@(Html.Kendo().Grid<OBMP.Models.OrderList>().Name("Order").Columns(c => {
+    c.Bound(o => o.OrderID);
+    c.Bound(o => o.Customer);
+    c.Bound(o => o.OrderDate).Format("{0:d}"); ;
+    c.Bound(o => o.DueDate).Format("{0:d}"); 
+    c.Bound(o => o.SalesRep); 
+    c.Bound(o => o.Status);
+    c.Command(command => command.Custom("ViewDetails").Click("showDetails"));
+    })
+    .DataSource(d => d
+        .Ajax()
+        .Read(r => r.Action("GetActivePendingOrders", "Order"))
+        .PageSize(20)
+        .ServerOperation(true)
+    )
+    .Pageable()
+    .Groupable()
+    .Sortable()
+    .Filterable()
+)
+
+
+@(Html.Kendo().Window().Name("Details")
+    .Title("Order Details")
+    .Visible(false)
+    .Modal(true)
+    .Content("loading data...")
+    .Draggable(true)
+    .Width(550)
+           
+)
+
+<script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        <h2>#= OrderTitle # </h2>
+        <em>#= Customer #</em>
+        <dl>
+            <dt>Order Date: #= OrderDate #</dt>
+            <dt>Status: #= Status #</dt>
+        </dl>
+    </div>
+</script>
+
+
+
+@section Scripts {
+    
+
+<script>
+    //var detailsTemplate = kendo.template($("#template").html());
+
+    function showDetails(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var wnd = $("#Details").data("kendoWindow");
+        wnd.refresh({
+            url: "/Order/OrderDetail",
+            data: {OrderID: dataItem.OrderID }
+        });
+
+        //wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
+        
+    }
+</script>
+
+
+}
