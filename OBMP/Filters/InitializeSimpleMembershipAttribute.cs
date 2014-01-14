@@ -39,7 +39,7 @@ namespace OBMP.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("OBMPConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
 
                     //seeding the role provider
                     var roles = (SimpleRoleProvider)Roles.Provider;

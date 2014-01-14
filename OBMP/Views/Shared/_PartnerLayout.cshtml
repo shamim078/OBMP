@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - OBMP</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @*@Styles.Render("~/Content/css")*@
+    @Styles.Render("~/Content/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style type="text/css">
+        /* Sticky footer styles
+      -------------------------------------------------- */
+
+        html,
+        body {
+            height: 100%;
+            /* The html and body elements cannot have any padding or margin. */
+        }
+
+        /* Wrapper for page content to push down footer */
+        #wrap {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            /* Negative indent footer by it's height */
+            margin: 0 auto -25px;
+        }
+
+        /* Set the fixed height of the footer here */
+        #push,
+        #footer {
+            height: 25px;
+        }
+
+        #footer {
+            background-color: #f5f5f5;
+        }
+
+        /*new change with shopify theme branch*/
+    </style>
+
+	<!--This bundle was moved by the Kendo UI VS Extensions for compatibility reasons-->
+	@Scripts.Render("~/bundles/jquery")
+	<!--This CSS entry was added by the Kendo UI VS Extensions for compatibility reasons-->
+	<link href="@Url.Content("~/Content/kendo.compatibility.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.blueopal.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.dataviz.blueopal.min.css")" rel="stylesheet" type="text/css" />
+	<script src="@Url.Content("~/Scripts/kendo/2013.3.1119/jquery.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2013.3.1119/kendo.all.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2013.3.1119/kendo.aspnetmvc.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+</head>
+<body>
+    <div id="wrap">
+        <div class="container">
+            <nav class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <a class="brand" href="/">OBMP</a>
+
+                    <div class="pull-right">
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </nav>
+
+
+
+
+            <div class="row">
+                <div class="span3">
+
+                    <ul class="nav nav-list alert alert-info">
+
+                        <li class="nav-header">Partner Dashboard</li>
+                        <li class="divider"></li>
+
+                        <li><a class="" href="#"><i class="icon-home"></i>Cutomers</a></li>
+                        <li><a class="" href="#"><i class="icon-gift"></i>Product Management</a></li>
+                        
+                        <li class="divider"></li>
+                        
+                        <li><a class="" href="#"><i class="icon-inbox"></i>Order Management</a></li>
+                        <li><a class="" href="#"><i class="icon-inbox"></i>Order Reports</a></li>
+                        <li><a class="" href="#"><i class="icon-file"></i>Payment Settlement</a></li>
+
+                                                
+                        <li class="divider"></li>
+
+                        <li><a class="" href="#"><i class="icon-info-sign"></i>Feeds and Notification</a></li>
+                        <li><a class="" href="#"><i class="icon-info-sign"></i>Support Ticket</a></li>
+                        <li><a class="" href="#"><i class="icon-info-sign"></i>My Profile</a></li>
+
+
+                    </ul>
+
+                </div>
+                <div class="span9">
+
+                    <div class="row">
+
+                        <div class="span9">
+                            <div class="alert alert-info"> 
+                                <strong>@ViewBag.Title</strong>
+                            </div>
+                        </div>
+                        <div class="span9">
+                            @RenderSection("featured", required: false)
+                            @RenderBody()
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <p class="text-muted text-center">&copy; @DateTime.Now.Year - Invia Pty Ltd.</p>
+        </div>
+    </div>
+
+    
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

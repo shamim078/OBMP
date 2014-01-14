@@ -24,7 +24,7 @@
     .ClientTemplateId("template")
     .DataSource(dataSource => {
         dataSource.Read(read => read.Action("Products_Read", "Product"));
-        dataSource.PageSize(12);
+        dataSource.PageSize(10);
     })
     .Pageable()
 )
@@ -48,8 +48,8 @@
         margin: 0;
         padding-top: 10px;
         padding-bottom: 10px;
-        padding-left: 20px;
-        padding-right:15px;
+        padding-left: 10px;
+        padding-right:10px;
     }
     .product img {
         /*width: 110px;

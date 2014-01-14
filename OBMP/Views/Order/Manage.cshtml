@@ -15,7 +15,8 @@
     c.Bound(o => o.DueDate).Format("{0:d}"); 
     c.Bound(o => o.SalesRep); 
     c.Bound(o => o.Status);
-    c.Command(command => command.Custom("ViewDetails").Click("showDetails"));
+    c.Command(command => command.Custom("Details").Click("showDetails"));
+    c.Command(command => command.Custom("History").Click("showHistory"));
     })
     .DataSource(d => d
         .Ajax()
@@ -40,25 +41,23 @@
            
 )
 
-<script type="text/x-kendo-template" id="template">
-    <div id="details-container">
-        <h2>#= OrderTitle # </h2>
-        <em>#= Customer #</em>
-        <dl>
-            <dt>Order Date: #= OrderDate #</dt>
-            <dt>Status: #= Status #</dt>
-        </dl>
-    </div>
-</script>
 
+@(Html.Kendo().Window().Name("Event")
+    .Title("Order Event")
+    .Visible(false)
+    .Modal(true)
+    .Content("loading data...")
+    .Draggable(true)
+    .Width(550)
+           
+)
 
 
 @section Scripts {
     
 
 <script>
-    //var detailsTemplate = kendo.template($("#template").html());
-
+    
     function showDetails(e) {
         e.preventDefault();
 
@@ -69,10 +68,24 @@
             data: {OrderID: dataItem.OrderID }
         });
 
-        //wnd.content(detailsTemplate(dataItem));
         wnd.center().open();
         
     }
+
+    function showHistory(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var wnd = $("#Event").data("kendoWindow");
+        wnd.refresh({
+            url: "/Order/OrderEvent",
+            data: { OrderID: dataItem.OrderID }
+        });
+
+        wnd.center().open();
+
+    }
+
 </script>
 
 

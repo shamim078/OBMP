@@ -1,0 +1,17 @@
+﻿@model IEnumerable<OBMP.Models.OrderEventList>
+
+<div class="well">
+
+@(Html.Kendo().Grid(Model)
+    .Name("OrderEvent")
+    
+    .Columns(c => {
+    c.Bound(o => o.ID);
+    c.Bound(o => o.EventDate);
+    c.Bound(o => o.Event); 
+    c.Bound(o => o.UserName);
+    c.Bound(o => o.RoleName); 
+    })
+)
+
+</div>

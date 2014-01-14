@@ -183,7 +183,155 @@ namespace OBMP.Controllers
             return PartialView("_OrderDetail", orderDetail);
         }
 
+        public ActionResult OrderEvent(long orderID)
+        {
+            IList<Models.OrderEventList> orderEventList = new List<Models.OrderEventList>();
+            Models.OrderEventList newOrderEventList;
 
+            using (IDbConnection oaConnection = dbContext.Connection)
+            {
+                string SqlQueryString = "SELECT OrderEvent.ID, OrderEvent.OrderID, OrderEvent.EventDate, OrderEvent.Event, UserProfile.UserName,    ";
+                SqlQueryString = SqlQueryString + " OrderEvent.UserID, webpages_Roles.RoleName FROM UserProfile INNER JOIN ";
+                SqlQueryString = SqlQueryString + " webpages_UsersInRoles ON UserProfile.UserId = webpages_UsersInRoles.UserId INNER JOIN ";
+                SqlQueryString = SqlQueryString + " webpages_Roles ON webpages_UsersInRoles.RoleId = webpages_Roles.RoleId INNER JOIN ";
+                SqlQueryString = SqlQueryString + " OrderEvent ON UserProfile.UserId = OrderEvent.UserID ";
+                SqlQueryString = SqlQueryString + " WHERE OrderEvent.OrderID=" + orderID.ToString();
+
+                using (IDbCommand oaCommand = oaConnection.CreateCommand())
+                {
+                    oaCommand.CommandText = SqlQueryString;
+                    using (IDataReader reader = oaCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            newOrderEventList = new Models.OrderEventList();
+
+                            newOrderEventList.ID = reader.GetInt64(0);
+                            //newOrderDetailList.OrderID = reader.GetInt64(1);
+                            //newOrderDetailList.OrderTitle = string.Format("OrderID={0}, Customer={1}", reader.GetInt64(0), reader.GetString(3));
+                            newOrderEventList.OrderID = reader.GetInt64(1);
+                            newOrderEventList.EventDate = reader.GetDateTime(2);
+                            newOrderEventList.Event = reader.GetString(3);
+                            newOrderEventList.UserName = reader.IsDBNull(4) ? "NA" : reader.GetString(4);
+                            //newOrderEventList.UserID = reader.IsDBNull(5) ? 0 : reader.GetInt64(5);
+                            newOrderEventList.UserID = reader.GetInt64(5);
+                            newOrderEventList.RoleName = reader.IsDBNull(6) ? "NA" : reader.GetString(6);
+
+
+                            orderEventList.Add(newOrderEventList);
+                        }
+
+
+                    }
+                }
+            }
+
+            var orderEvent = orderEventList.AsQueryable();
+
+
+            return PartialView("_OrderEvent", orderEvent);
+        }
+
+
+        public ActionResult GetActivePendingOrders([DataSourceRequest]DataSourceRequest request)
+        {
+            IList<Models.OrderList> orderList = new List<Models.OrderList>();
+            Models.OrderList newOrderList;
+
+            using (IDbConnection oaConnection = dbContext.Connection)
+            {
+                string SqlQueryString = "SELECT [Order].ID, [Order].OrderDate, [Order].DueDate, Customer.Name, Customer.AccountReference, Customer.UID,  ";
+                SqlQueryString = SqlQueryString + " SalesRepresentative.Name AS SaleRep, OrderStatusCode.Title FROM [Order] INNER JOIN ";
+                SqlQueryString = SqlQueryString + " Customer ON [Order].CustomerID = Customer.ID INNER JOIN SalesRepresentative ON [Order].SalesPersonID=SalesRepresentative.ID ";
+                SqlQueryString = SqlQueryString + " INNER JOIN OrderStatusCode ON [Order].Status = OrderStatusCode.ID WHERE ([Order].Status = 1) ORDER BY [Order].OrderDate DESC ";
+
+                using (IDbCommand oaCommand = oaConnection.CreateCommand())
+                {
+                    oaCommand.CommandText = SqlQueryString;
+                    using (IDataReader reader = oaCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            newOrderList = new Models.OrderList();
+
+                            newOrderList.OrderID = reader.GetInt64(0);
+                            newOrderList.OrderTitle = string.Format("OrderID={0}, Customer={1}", reader.GetInt64(0), reader.GetString(3));
+                            newOrderList.OrderDate = reader.GetDateTime(1);
+                            newOrderList.DueDate = reader.GetDateTime(2);
+                            newOrderList.Customer = reader.GetString(3);
+                            newOrderList.SalesRep = reader.GetString(6);
+                            newOrderList.Status = reader.GetString(7);
+
+                            orderList.Add(newOrderList);
+                        }
+
+
+                    }
+                }
+            }
+
+            var orders = orderList.AsQueryable();
+
+
+            //return Json(orders, JsonRequestBehavior.AllowGet);
+
+            return this.Json(orders.ToDataSourceResult(request));
+        }
+
+        public JsonResult GetOrderDetail([DataSourceRequest]DataSourceRequest request)
+        {
+            IList<Models.OrderDetailList> orderDetailList = new List<Models.OrderDetailList>();
+            Models.OrderDetailList newOrderDetailList;
+
+            using (IDbConnection oaConnection = dbContext.Connection)
+            {
+                string SqlQueryString = "SELECT OrderDetail.SalesOrderDetailID, OrderDetail.SalesOrderID, OrderDetail.ProductID, Product.Name,  ";
+                SqlQueryString = SqlQueryString + " OrderDetail.UnitPrice, OrderDetail.OrderQuantity, OrderDetail.LineTotal, OrderDetail.CustomerID,  ";
+                SqlQueryString = SqlQueryString + " OrderDetail.PartnerID FROM OrderDetail INNER JOIN ";
+                SqlQueryString = SqlQueryString + " Product ON OrderDetail.ProductID = Product.ID WHERE OrderDetail.SalesOrderID <0";
+
+                using (IDbCommand oaCommand = oaConnection.CreateCommand())
+                {
+                    oaCommand.CommandText = SqlQueryString;
+                    using (IDataReader reader = oaCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            newOrderDetailList = new Models.OrderDetailList();
+
+                            newOrderDetailList.OrderDetailID = reader.GetInt64(0);
+                            //newOrderDetailList.OrderID = reader.GetInt64(1);
+                            //newOrderDetailList.OrderTitle = string.Format("OrderID={0}, Customer={1}", reader.GetInt64(0), reader.GetString(3));
+                            newOrderDetailList.ProductID = reader.GetInt64(2);
+                            newOrderDetailList.ProductName = reader.GetString(3);
+
+                            newOrderDetailList.UnitPrice = reader.IsDBNull(4) ? 0 : reader.GetDecimal(4);
+                            newOrderDetailList.OrderQuantity = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
+                            newOrderDetailList.LineTotal = reader.IsDBNull(6) ? 0 : reader.GetDecimal(6);
+
+
+                            orderDetailList.Add(newOrderDetailList);
+                        }
+
+
+                    }
+                }
+            }
+
+            var orderDetail = orderDetailList.AsQueryable();
+
+
+            //return Json(orderDetail, JsonRequestBehavior.AllowGet);
+
+            return this.Json(orderDetail.ToDataSourceResult(request));
+        }
+
+
+        public ActionResult Reports()
+        {
+            return View();
+        }
+        
         #region old code
         //
         // GET: /Order/All
@@ -401,97 +549,6 @@ namespace OBMP.Controllers
 
         #endregion
 
-        public ActionResult GetActivePendingOrders([DataSourceRequest]DataSourceRequest request)
-        {
-            IList<Models.OrderList> orderList = new List<Models.OrderList>();
-            Models.OrderList newOrderList;
 
-            using (IDbConnection oaConnection = dbContext.Connection)
-            {
-                string SqlQueryString = "SELECT [Order].ID, [Order].OrderDate, [Order].DueDate, Customer.Name, Customer.AccountReference, Customer.UID,  ";
-                SqlQueryString = SqlQueryString + " SalesRepresentative.Name AS SaleRep, OrderStatusCode.Title FROM [Order] INNER JOIN ";
-                SqlQueryString = SqlQueryString + " Customer ON [Order].CustomerID = Customer.ID INNER JOIN SalesRepresentative ON [Order].SalesPersonID=SalesRepresentative.ID ";
-                SqlQueryString = SqlQueryString + " INNER JOIN OrderStatusCode ON [Order].Status = OrderStatusCode.ID WHERE ([Order].Status = 1) ORDER BY [Order].OrderDate DESC ";
-
-                using (IDbCommand oaCommand = oaConnection.CreateCommand())
-                {
-                    oaCommand.CommandText = SqlQueryString;
-                    using (IDataReader reader = oaCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            newOrderList = new Models.OrderList();
-
-                            newOrderList.OrderID = reader.GetInt64(0);
-                            newOrderList.OrderTitle = string.Format("OrderID={0}, Customer={1}", reader.GetInt64(0), reader.GetString(3));
-                            newOrderList.OrderDate = reader.GetDateTime(1);
-                            newOrderList.DueDate = reader.GetDateTime(2);
-                            newOrderList.Customer = reader.GetString(3);
-                            newOrderList.SalesRep = reader.GetString(6);
-                            newOrderList.Status = reader.GetString(7);
-
-                            orderList.Add(newOrderList);
-                        }
-
-
-                    }
-                }
-            }
-
-            var orders = orderList.AsQueryable();
-
-
-            //return Json(orders, JsonRequestBehavior.AllowGet);
-
-            return this.Json(orders.ToDataSourceResult(request));
-        }
-
-        public JsonResult GetOrderDetail([DataSourceRequest]DataSourceRequest request)
-        {
-            IList<Models.OrderDetailList> orderDetailList = new List<Models.OrderDetailList>();
-            Models.OrderDetailList newOrderDetailList;
-
-            using (IDbConnection oaConnection = dbContext.Connection)
-            {
-                string SqlQueryString = "SELECT OrderDetail.SalesOrderDetailID, OrderDetail.SalesOrderID, OrderDetail.ProductID, Product.Name,  ";
-                SqlQueryString = SqlQueryString + " OrderDetail.UnitPrice, OrderDetail.OrderQuantity, OrderDetail.LineTotal, OrderDetail.CustomerID,  ";
-                SqlQueryString = SqlQueryString + " OrderDetail.PartnerID FROM OrderDetail INNER JOIN ";
-                SqlQueryString = SqlQueryString + " Product ON OrderDetail.ProductID = Product.ID WHERE OrderDetail.SalesOrderID <0";
-
-                using (IDbCommand oaCommand = oaConnection.CreateCommand())
-                {
-                    oaCommand.CommandText = SqlQueryString;
-                    using (IDataReader reader = oaCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            newOrderDetailList = new Models.OrderDetailList();
-
-                            newOrderDetailList.OrderDetailID = reader.GetInt64(0);
-                            //newOrderDetailList.OrderID = reader.GetInt64(1);
-                            //newOrderDetailList.OrderTitle = string.Format("OrderID={0}, Customer={1}", reader.GetInt64(0), reader.GetString(3));
-                            newOrderDetailList.ProductID = reader.GetInt64(2);
-                            newOrderDetailList.ProductName = reader.GetString(3);
-
-                            newOrderDetailList.UnitPrice = reader.IsDBNull(4) ? 0 : reader.GetDecimal(4);
-                            newOrderDetailList.OrderQuantity = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
-                            newOrderDetailList.LineTotal = reader.IsDBNull(6) ? 0 : reader.GetDecimal(6);
-
-      
-                            orderDetailList.Add(newOrderDetailList);
-                        }
-
-
-                    }
-                }
-            }
-
-            var orderDetail = orderDetailList.AsQueryable();
-
-
-            //return Json(orderDetail, JsonRequestBehavior.AllowGet);
-
-            return this.Json(orderDetail.ToDataSourceResult(request));
-        }
     }
 }

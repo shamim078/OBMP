@@ -225,6 +225,7 @@
     <Compile Include="Models\OrderDetailList.cs" />
     <Compile Include="Models\CustomerSaleRep.cs" />
     <Compile Include="Models\CustomerList.cs" />
+    <Compile Include="Models\OrderEventList.cs" />
     <Compile Include="Models\OrderList.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\PartnerList.cs" />
@@ -906,6 +907,12 @@
     <Content Include="Views\Order\Create.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ProductDropDown.cshtml" />
     <Content Include="Views\Order\_OrderDetail.cshtml" />
+    <Content Include="Views\Order\_OrderEvent.cshtml" />
+    <Content Include="Views\Shared\_PartnerLayout.cshtml" />
+    <Content Include="Views\Shared\_CustomerLayout.cshtml" />
+    <Content Include="Views\Shared\_BoBSaleRepLayout.cshtml" />
+    <Content Include="Views\Shared\_DefaultLayout.cshtml" />
+    <Content Include="Views\Order\Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
