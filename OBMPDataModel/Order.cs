@@ -18,7 +18,6 @@ using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
-using System.ComponentModel.DataAnnotations;
 using OBMPDataModel;
 
 namespace OBMPDataModel	
@@ -26,8 +25,6 @@ namespace OBMPDataModel
 	public partial class Order
 	{
 		private long _iD;
-		[Required()]
-		[Key()]
 		public virtual long ID
 		{
 			get
@@ -41,7 +38,6 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _orderDate;
-		[DataType(DataType.DateTime)]
 		public virtual DateTime? OrderDate
 		{
 			get
@@ -55,7 +51,6 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _dueDate;
-		[DataType(DataType.DateTime)]
 		public virtual DateTime? DueDate
 		{
 			get
@@ -121,7 +116,6 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _modificationDate;
-		[DataType(DataType.DateTime)]
 		public virtual DateTime? ModificationDate
 		{
 			get
@@ -161,7 +155,6 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _optusUpdateDate;
-		[DataType(DataType.DateTime)]
 		public virtual DateTime? OptusUpdateDate
 		{
 			get
@@ -201,7 +194,6 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _partnerUpdateDate;
-		[DataType(DataType.DateTime)]
 		public virtual DateTime? PartnerUpdateDate
 		{
 			get
@@ -241,7 +233,6 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _customerUpdateDate;
-		[DataType(DataType.DateTime)]
 		public virtual DateTime? CustomerUpdateDate
 		{
 			get

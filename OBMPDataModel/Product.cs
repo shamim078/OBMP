@@ -18,7 +18,6 @@ using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
-using System.ComponentModel.DataAnnotations;
 using OBMPDataModel;
 
 namespace OBMPDataModel	
@@ -26,8 +25,6 @@ namespace OBMPDataModel
 	public partial class Product
 	{
 		private long _iD;
-		[Required()]
-		[Key()]
 		public virtual long ID
 		{
 			get
@@ -40,8 +37,20 @@ namespace OBMPDataModel
 			}
 		}
 		
+		private string _productCode;
+		public virtual string ProductCode
+		{
+			get
+			{
+				return this._productCode;
+			}
+			set
+			{
+				this._productCode = value;
+			}
+		}
+		
 		private string _name;
-		[StringLength(100)]
 		public virtual string Name
 		{
 			get
@@ -55,7 +64,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _partnerProductName;
-		[StringLength(100)]
 		public virtual string PartnerProductName
 		{
 			get
@@ -69,7 +77,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _sSOTProductName;
-		[StringLength(100)]
 		public virtual string SSOTProductName
 		{
 			get
@@ -83,7 +90,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _sAPProductName;
-		[StringLength(100)]
 		public virtual string SAPProductName
 		{
 			get
@@ -97,7 +103,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _gSMISProductName;
-		[StringLength(100)]
 		public virtual string GSMISProductName
 		{
 			get
@@ -110,161 +115,7 @@ namespace OBMPDataModel
 			}
 		}
 		
-		private byte? _partnerShareType;
-		public virtual byte? PartnerShareType
-		{
-			get
-			{
-				return this._partnerShareType;
-			}
-			set
-			{
-				this._partnerShareType = value;
-			}
-		}
-		
-		private string _shareValue1;
-		[StringLength(50)]
-		public virtual string ShareValue1
-		{
-			get
-			{
-				return this._shareValue1;
-			}
-			set
-			{
-				this._shareValue1 = value;
-			}
-		}
-		
-		private string _shareValue2;
-		[StringLength(50)]
-		public virtual string ShareValue2
-		{
-			get
-			{
-				return this._shareValue2;
-			}
-			set
-			{
-				this._shareValue2 = value;
-			}
-		}
-		
-		private string _shareValue3;
-		[StringLength(50)]
-		public virtual string ShareValue3
-		{
-			get
-			{
-				return this._shareValue3;
-			}
-			set
-			{
-				this._shareValue3 = value;
-			}
-		}
-		
-		private string _shareValue4;
-		[StringLength(50)]
-		public virtual string ShareValue4
-		{
-			get
-			{
-				return this._shareValue4;
-			}
-			set
-			{
-				this._shareValue4 = value;
-			}
-		}
-		
-		private string _shareValue5;
-		[StringLength(50)]
-		public virtual string ShareValue5
-		{
-			get
-			{
-				return this._shareValue5;
-			}
-			set
-			{
-				this._shareValue5 = value;
-			}
-		}
-		
-		private string _shareValue6;
-		[StringLength(50)]
-		public virtual string ShareValue6
-		{
-			get
-			{
-				return this._shareValue6;
-			}
-			set
-			{
-				this._shareValue6 = value;
-			}
-		}
-		
-		private string _shareValue7;
-		[StringLength(50)]
-		public virtual string ShareValue7
-		{
-			get
-			{
-				return this._shareValue7;
-			}
-			set
-			{
-				this._shareValue7 = value;
-			}
-		}
-		
-		private string _shareValue8;
-		[StringLength(50)]
-		public virtual string ShareValue8
-		{
-			get
-			{
-				return this._shareValue8;
-			}
-			set
-			{
-				this._shareValue8 = value;
-			}
-		}
-		
-		private string _shareValue9;
-		[StringLength(50)]
-		public virtual string ShareValue9
-		{
-			get
-			{
-				return this._shareValue9;
-			}
-			set
-			{
-				this._shareValue9 = value;
-			}
-		}
-		
-		private string _shareValue10;
-		[StringLength(50)]
-		public virtual string ShareValue10
-		{
-			get
-			{
-				return this._shareValue10;
-			}
-			set
-			{
-				this._shareValue10 = value;
-			}
-		}
-		
 		private string _description;
-		[StringLength(250)]
 		public virtual string Description
 		{
 			get
@@ -290,21 +141,7 @@ namespace OBMPDataModel
 			}
 		}
 		
-		private bool? _activeFlag;
-		public virtual bool? ActiveFlag
-		{
-			get
-			{
-				return this._activeFlag;
-			}
-			set
-			{
-				this._activeFlag = value;
-			}
-		}
-		
 		private DateTime? _dateRegistered;
-		[DataType(DataType.DateTime)]
 		public virtual DateTime? DateRegistered
 		{
 			get
@@ -314,6 +151,201 @@ namespace OBMPDataModel
 			set
 			{
 				this._dateRegistered = value;
+			}
+		}
+		
+		private DateTime? _effectiveDate;
+		public virtual DateTime? EffectiveDate
+		{
+			get
+			{
+				return this._effectiveDate;
+			}
+			set
+			{
+				this._effectiveDate = value;
+			}
+		}
+		
+		private DateTime? _endDate;
+		public virtual DateTime? EndDate
+		{
+			get
+			{
+				return this._endDate;
+			}
+			set
+			{
+				this._endDate = value;
+			}
+		}
+		
+		private int? _marketPlaceSectionID;
+		public virtual int? MarketPlaceSectionID
+		{
+			get
+			{
+				return this._marketPlaceSectionID;
+			}
+			set
+			{
+				this._marketPlaceSectionID = value;
+			}
+		}
+		
+		private int? _subCategoryID;
+		public virtual int? SubCategoryID
+		{
+			get
+			{
+				return this._subCategoryID;
+			}
+			set
+			{
+				this._subCategoryID = value;
+			}
+		}
+		
+		private string _chargeFrequency;
+		public virtual string ChargeFrequency
+		{
+			get
+			{
+				return this._chargeFrequency;
+			}
+			set
+			{
+				this._chargeFrequency = value;
+			}
+		}
+		
+		private string _chargeType;
+		public virtual string ChargeType
+		{
+			get
+			{
+				return this._chargeType;
+			}
+			set
+			{
+				this._chargeType = value;
+			}
+		}
+		
+		private long? _charge;
+		public virtual long? Charge
+		{
+			get
+			{
+				return this._charge;
+			}
+			set
+			{
+				this._charge = value;
+			}
+		}
+		
+		private bool? _applyGST;
+		public virtual bool? ApplyGST
+		{
+			get
+			{
+				return this._applyGST;
+			}
+			set
+			{
+				this._applyGST = value;
+			}
+		}
+		
+		private string _revenuShareType;
+		public virtual string RevenuShareType
+		{
+			get
+			{
+				return this._revenuShareType;
+			}
+			set
+			{
+				this._revenuShareType = value;
+			}
+		}
+		
+		private int? _fixedOperatorRevenue;
+		public virtual int? FixedOperatorRevenue
+		{
+			get
+			{
+				return this._fixedOperatorRevenue;
+			}
+			set
+			{
+				this._fixedOperatorRevenue = value;
+			}
+		}
+		
+		private int? _fixedPartnerRevenue;
+		public virtual int? FixedPartnerRevenue
+		{
+			get
+			{
+				return this._fixedPartnerRevenue;
+			}
+			set
+			{
+				this._fixedPartnerRevenue = value;
+			}
+		}
+		
+		private int? _percentageOperatorRevenue;
+		public virtual int? PercentageOperatorRevenue
+		{
+			get
+			{
+				return this._percentageOperatorRevenue;
+			}
+			set
+			{
+				this._percentageOperatorRevenue = value;
+			}
+		}
+		
+		private int? _percentagePartnerRevenue;
+		public virtual int? PercentagePartnerRevenue
+		{
+			get
+			{
+				return this._percentagePartnerRevenue;
+			}
+			set
+			{
+				this._percentagePartnerRevenue = value;
+			}
+		}
+		
+		private int? _recurringFixedMonth;
+		public virtual int? RecurringFixedMonth
+		{
+			get
+			{
+				return this._recurringFixedMonth;
+			}
+			set
+			{
+				this._recurringFixedMonth = value;
+			}
+		}
+		
+		private string _productStatus;
+		public virtual string ProductStatus
+		{
+			get
+			{
+				return this._productStatus;
+			}
+			set
+			{
+				this._productStatus = value;
 			}
 		}
 		

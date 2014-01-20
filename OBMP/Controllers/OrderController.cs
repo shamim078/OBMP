@@ -159,6 +159,8 @@ namespace OBMP.Controllers
                             newOrderDetailList = new Models.OrderDetailList();
 
                             newOrderDetailList.OrderDetailID = reader.GetInt64(0);
+                            //newOrderDetailList.OrderDetailID = 
+                            //Convert.ChangeType(reader.GetValue(0), reader.GetFieldType(0) ); //(reader.GetFieldType(0))reader.GetValue(0); 
                             //newOrderDetailList.OrderID = reader.GetInt64(1);
                             //newOrderDetailList.OrderTitle = string.Format("OrderID={0}, Customer={1}", reader.GetInt64(0), reader.GetString(3));
                             newOrderDetailList.ProductID = reader.GetInt64(2);

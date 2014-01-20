@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Partner Product Management";
+}
+
+<ul id="myTab" class="nav nav-tabs">
+    <li><a href="~/Product/Manage" class="btn-large">Product List</a></li>
+    <li><a href="~/Product/Add"  class="btn-large">Add New Product</a></li>
+    <li><a href="~/Product/Category" class="btn-large">Category</a></li>
+    <li   class="active"><a href="~/Product/MarketPlaceSection"  class="btn-large">Market Place Section</a></li>
+</ul>
+
+
+@(Html.Kendo().Grid<OBMPDataModel.MarketPlaceSection >()    
+    .Name("Section")
+    .Columns(columns => {
+        columns.Bound(c => c.ID).Visible(false);
+        columns.Bound(c => c.Name);
+        columns.Bound(c => c.ModifiedDate).Format("{0:d}").EditorTemplateName("Date");
+        columns.Command(commands => { commands.Edit(); });
+       
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Model(model => 
+            {
+                model.Id(c => c.ID);
+                model.Field(c => c.ID).Editable(false);
+                model.Field(c => c.ModifiedDate).Editable(false);
+            })
+        .Create(update => update.Action("AddMarketPlaceSection", "Product"))
+        .Read(read => read.Action("GetMarketPlaceSection", "Product"))
+        .Update(update => update.Action("UpdateMarketPlaceSection", "Product"))
+    )    
+)
+
+
+
+
+
+

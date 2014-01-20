@@ -50,6 +50,14 @@ namespace OBMPDataModel
 			:base(connection, backendConfiguration, metadataSource)
 		{ }
 			
+		public IQueryable<Webpages_Role> Webpages_Roles 
+		{
+			get
+			{
+				return this.GetAll<Webpages_Role>();
+			}
+		}
+		
 		public IQueryable<UserProfile> UserProfiles 
 		{
 			get
@@ -71,6 +79,38 @@ namespace OBMPDataModel
 			get
 			{
 				return this.GetAll<SaleRepCustomer>();
+			}
+		}
+		
+		public IQueryable<ProductTieredUsage> ProductTieredUsages 
+		{
+			get
+			{
+				return this.GetAll<ProductTieredUsage>();
+			}
+		}
+		
+		public IQueryable<ProductSubcategory> ProductSubcategories 
+		{
+			get
+			{
+				return this.GetAll<ProductSubcategory>();
+			}
+		}
+		
+		public IQueryable<ProductShareType> ProductShareTypes 
+		{
+			get
+			{
+				return this.GetAll<ProductShareType>();
+			}
+		}
+		
+		public IQueryable<ProductCategory> ProductCategories 
+		{
+			get
+			{
+				return this.GetAll<ProductCategory>();
 			}
 		}
 		
@@ -98,6 +138,22 @@ namespace OBMPDataModel
 			}
 		}
 		
+		public IQueryable<OrderStatusCode> OrderStatusCodes 
+		{
+			get
+			{
+				return this.GetAll<OrderStatusCode>();
+			}
+		}
+		
+		public IQueryable<OrderEvent> OrderEvents 
+		{
+			get
+			{
+				return this.GetAll<OrderEvent>();
+			}
+		}
+		
 		public IQueryable<OrderDetail> OrderDetails 
 		{
 			get
@@ -111,6 +167,14 @@ namespace OBMPDataModel
 			get
 			{
 				return this.GetAll<Order>();
+			}
+		}
+		
+		public IQueryable<MarketPlaceSection> MarketPlaceSections 
+		{
+			get
+			{
+				return this.GetAll<MarketPlaceSection>();
 			}
 		}
 		
@@ -130,6 +194,14 @@ namespace OBMPDataModel
 			}
 		}
 		
+		public IQueryable<ProductView> ProductViews 
+		{
+			get
+			{
+				return this.GetAll<ProductView>();
+			}
+		}
+		
 		public static BackendConfiguration GetBackendConfiguration()
 		{
 			BackendConfiguration backend = new BackendConfiguration();
@@ -141,6 +213,10 @@ namespace OBMPDataModel
 	
 	public interface IFluentModelUnitOfWork : IUnitOfWork
 	{
+		IQueryable<Webpages_Role> Webpages_Roles
+		{
+			get;
+		}
 		IQueryable<UserProfile> UserProfiles
 		{
 			get;
@@ -150,6 +226,22 @@ namespace OBMPDataModel
 			get;
 		}
 		IQueryable<SaleRepCustomer> SaleRepCustomers
+		{
+			get;
+		}
+		IQueryable<ProductTieredUsage> ProductTieredUsages
+		{
+			get;
+		}
+		IQueryable<ProductSubcategory> ProductSubcategories
+		{
+			get;
+		}
+		IQueryable<ProductShareType> ProductShareTypes
+		{
+			get;
+		}
+		IQueryable<ProductCategory> ProductCategories
 		{
 			get;
 		}
@@ -165,6 +257,14 @@ namespace OBMPDataModel
 		{
 			get;
 		}
+		IQueryable<OrderStatusCode> OrderStatusCodes
+		{
+			get;
+		}
+		IQueryable<OrderEvent> OrderEvents
+		{
+			get;
+		}
 		IQueryable<OrderDetail> OrderDetails
 		{
 			get;
@@ -173,11 +273,19 @@ namespace OBMPDataModel
 		{
 			get;
 		}
+		IQueryable<MarketPlaceSection> MarketPlaceSections
+		{
+			get;
+		}
 		IQueryable<Customer> Customers
 		{
 			get;
 		}
 		IQueryable<Billing> Billings
+		{
+			get;
+		}
+		IQueryable<ProductView> ProductViews
 		{
 			get;
 		}

@@ -31,6 +31,9 @@ namespace OBMPDataModel
 		{
 			List<MappingConfiguration> mappingConfigurations = new List<MappingConfiguration>();
 			
+			MappingConfiguration<Webpages_Role> webpages_roleConfiguration = this.GetWebpages_RoleMappingConfiguration();
+			mappingConfigurations.Add(webpages_roleConfiguration);
+			
 			MappingConfiguration<UserProfile> userprofileConfiguration = this.GetUserProfileMappingConfiguration();
 			mappingConfigurations.Add(userprofileConfiguration);
 			
@@ -39,6 +42,18 @@ namespace OBMPDataModel
 			
 			MappingConfiguration<SaleRepCustomer> salerepcustomerConfiguration = this.GetSaleRepCustomerMappingConfiguration();
 			mappingConfigurations.Add(salerepcustomerConfiguration);
+			
+			MappingConfiguration<ProductTieredUsage> producttieredusageConfiguration = this.GetProductTieredUsageMappingConfiguration();
+			mappingConfigurations.Add(producttieredusageConfiguration);
+			
+			MappingConfiguration<ProductSubcategory> productsubcategoryConfiguration = this.GetProductSubcategoryMappingConfiguration();
+			mappingConfigurations.Add(productsubcategoryConfiguration);
+			
+			MappingConfiguration<ProductShareType> productsharetypeConfiguration = this.GetProductShareTypeMappingConfiguration();
+			mappingConfigurations.Add(productsharetypeConfiguration);
+			
+			MappingConfiguration<ProductCategory> productcategoryConfiguration = this.GetProductCategoryMappingConfiguration();
+			mappingConfigurations.Add(productcategoryConfiguration);
 			
 			MappingConfiguration<Product> productConfiguration = this.GetProductMappingConfiguration();
 			mappingConfigurations.Add(productConfiguration);
@@ -49,17 +64,29 @@ namespace OBMPDataModel
 			MappingConfiguration<Partner> partnerConfiguration = this.GetPartnerMappingConfiguration();
 			mappingConfigurations.Add(partnerConfiguration);
 			
+			MappingConfiguration<OrderStatusCode> orderstatuscodeConfiguration = this.GetOrderStatusCodeMappingConfiguration();
+			mappingConfigurations.Add(orderstatuscodeConfiguration);
+			
+			MappingConfiguration<OrderEvent> ordereventConfiguration = this.GetOrderEventMappingConfiguration();
+			mappingConfigurations.Add(ordereventConfiguration);
+			
 			MappingConfiguration<OrderDetail> orderdetailConfiguration = this.GetOrderDetailMappingConfiguration();
 			mappingConfigurations.Add(orderdetailConfiguration);
 			
 			MappingConfiguration<Order> orderConfiguration = this.GetOrderMappingConfiguration();
 			mappingConfigurations.Add(orderConfiguration);
 			
+			MappingConfiguration<MarketPlaceSection> marketplacesectionConfiguration = this.GetMarketPlaceSectionMappingConfiguration();
+			mappingConfigurations.Add(marketplacesectionConfiguration);
+			
 			MappingConfiguration<Customer> customerConfiguration = this.GetCustomerMappingConfiguration();
 			mappingConfigurations.Add(customerConfiguration);
 			
 			MappingConfiguration<Billing> billingConfiguration = this.GetBillingMappingConfiguration();
 			mappingConfigurations.Add(billingConfiguration);
+			
+			MappingConfiguration<ProductView> productviewConfiguration = this.GetProductViewMappingConfiguration();
+			mappingConfigurations.Add(productviewConfiguration);
 			
 			return mappingConfigurations;
 		}
@@ -71,10 +98,39 @@ namespace OBMPDataModel
 			container.NameGenerator.SourceStrategy = Telerik.OpenAccess.Metadata.NamingSourceStrategy.Property;
 			container.NameGenerator.RemoveCamelCase = false;
 		}
+		public MappingConfiguration<Webpages_Role> GetWebpages_RoleMappingConfiguration()
+		{
+			MappingConfiguration<Webpages_Role> configuration = this.GetWebpages_RoleClassConfiguration();
+			this.PrepareWebpages_RolePropertyConfigurations(configuration);
+			this.PrepareWebpages_RoleAssociationConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<Webpages_Role> GetWebpages_RoleClassConfiguration()
+		{
+			MappingConfiguration<Webpages_Role> configuration = new MappingConfiguration<Webpages_Role>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("webpages_Roles");
+	
+			return configuration;
+		}
+	
+		public void PrepareWebpages_RolePropertyConfigurations(MappingConfiguration<Webpages_Role> configuration)
+		{
+			configuration.HasProperty(x => x.RoleId).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_roleId").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("RoleId").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.RoleName).HasFieldName("_roleName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("RoleName").IsNotNullable().HasColumnType("nvarchar").HasLength(256);
+		}
+	
+		public void PrepareWebpages_RoleAssociationConfigurations(MappingConfiguration<Webpages_Role> configuration)
+		{
+			configuration.HasAssociation(x => x.UserProfiles).HasFieldName("_userProfiles").WithOpposite(x => x.Webpages_Roles).WithDataAccessKind(DataAccessKind.ReadWrite).MapJoinTable("webpages_UsersInRoles", (x, y) => new{RoleId = x.RoleId, UserId = y.UserId}).CreatePrimaryKeyFromForeignKeys();
+		}
+		
 		public MappingConfiguration<UserProfile> GetUserProfileMappingConfiguration()
 		{
 			MappingConfiguration<UserProfile> configuration = this.GetUserProfileClassConfiguration();
 			this.PrepareUserProfilePropertyConfigurations(configuration);
+			this.PrepareUserProfileAssociationConfigurations(configuration);
 
 			return configuration;
 		}
@@ -92,6 +148,12 @@ namespace OBMPDataModel
 			configuration.HasProperty(x => x.UserId).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_userId").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("UserId").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.UserName).HasFieldName("_userName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("UserName").IsNullable().HasColumnType("nvarchar(max)").HasLength(0);
 		}
+	
+		public void PrepareUserProfileAssociationConfigurations(MappingConfiguration<UserProfile> configuration)
+		{
+			configuration.HasAssociation(x => x.Webpages_Roles).HasFieldName("_webpages_Roles").WithOpposite(x => x.UserProfiles).WithDataAccessKind(DataAccessKind.ReadWrite);
+		}
+		
 		public MappingConfiguration<SalesRepresentative> GetSalesRepresentativeMappingConfiguration()
 		{
 			MappingConfiguration<SalesRepresentative> configuration = this.GetSalesRepresentativeClassConfiguration();
@@ -138,6 +200,97 @@ namespace OBMPDataModel
 			configuration.HasProperty(x => x.CustomerID).HasFieldName("_customerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("CustomerID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.MappedDate).HasFieldName("_mappedDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("MappedDate").IsNullable().HasColumnType("date");
 		}
+		public MappingConfiguration<ProductTieredUsage> GetProductTieredUsageMappingConfiguration()
+		{
+			MappingConfiguration<ProductTieredUsage> configuration = this.GetProductTieredUsageClassConfiguration();
+			this.PrepareProductTieredUsagePropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<ProductTieredUsage> GetProductTieredUsageClassConfiguration()
+		{
+			MappingConfiguration<ProductTieredUsage> configuration = new MappingConfiguration<ProductTieredUsage>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("ProductTieredUsage");
+	
+			return configuration;
+		}
+	
+		public void PrepareProductTieredUsagePropertyConfigurations(MappingConfiguration<ProductTieredUsage> configuration)
+		{
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ProductID).HasFieldName("_productID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ProductID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.Lower).HasFieldName("_lower").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Lower").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.Upper).HasFieldName("_upper").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Upper").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.Charge).HasFieldName("_charge").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Charge").IsNullable().HasColumnType("numeric").HasPrecision(18).HasScale(0);
+		}
+		public MappingConfiguration<ProductSubcategory> GetProductSubcategoryMappingConfiguration()
+		{
+			MappingConfiguration<ProductSubcategory> configuration = this.GetProductSubcategoryClassConfiguration();
+			this.PrepareProductSubcategoryPropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<ProductSubcategory> GetProductSubcategoryClassConfiguration()
+		{
+			MappingConfiguration<ProductSubcategory> configuration = new MappingConfiguration<ProductSubcategory>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("ProductSubcategory");
+	
+			return configuration;
+		}
+	
+		public void PrepareProductSubcategoryPropertyConfigurations(MappingConfiguration<ProductSubcategory> configuration)
+		{
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ProductCategoryID).HasFieldName("_productCategoryID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ProductCategoryID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.Name).HasFieldName("_name").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Name").IsNotNullable().HasColumnType("nvarchar").HasLength(100);
+			configuration.HasProperty(x => x.ModifiedDate).HasFieldName("_modifiedDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ModifiedDate").IsNotNullable().HasColumnType("datetime");
+		}
+		public MappingConfiguration<ProductShareType> GetProductShareTypeMappingConfiguration()
+		{
+			MappingConfiguration<ProductShareType> configuration = this.GetProductShareTypeClassConfiguration();
+			this.PrepareProductShareTypePropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<ProductShareType> GetProductShareTypeClassConfiguration()
+		{
+			MappingConfiguration<ProductShareType> configuration = new MappingConfiguration<ProductShareType>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("ProductShareType");
+	
+			return configuration;
+		}
+	
+		public void PrepareProductShareTypePropertyConfigurations(MappingConfiguration<ProductShareType> configuration)
+		{
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.Name).HasFieldName("_name").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Name").IsNotNullable().HasColumnType("nvarchar").HasLength(100);
+			configuration.HasProperty(x => x.ModifiedDate).HasFieldName("_modifiedDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ModifiedDate").IsNotNullable().HasColumnType("datetime");
+		}
+		public MappingConfiguration<ProductCategory> GetProductCategoryMappingConfiguration()
+		{
+			MappingConfiguration<ProductCategory> configuration = this.GetProductCategoryClassConfiguration();
+			this.PrepareProductCategoryPropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<ProductCategory> GetProductCategoryClassConfiguration()
+		{
+			MappingConfiguration<ProductCategory> configuration = new MappingConfiguration<ProductCategory>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("ProductCategory");
+	
+			return configuration;
+		}
+	
+		public void PrepareProductCategoryPropertyConfigurations(MappingConfiguration<ProductCategory> configuration)
+		{
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.Name).HasFieldName("_name").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Name").IsNotNullable().HasColumnType("nvarchar").HasLength(100);
+			configuration.HasProperty(x => x.ModifiedDate).HasFieldName("_modifiedDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ModifiedDate").IsNotNullable().HasColumnType("datetime");
+		}
 		public MappingConfiguration<Product> GetProductMappingConfiguration()
 		{
 			MappingConfiguration<Product> configuration = this.GetProductClassConfiguration();
@@ -158,26 +311,30 @@ namespace OBMPDataModel
 		public void PrepareProductPropertyConfigurations(MappingConfiguration<Product> configuration)
 		{
 			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ProductCode).HasFieldName("_productCode").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ProductCode").IsNullable().HasColumnType("nvarchar").HasLength(20);
 			configuration.HasProperty(x => x.Name).HasFieldName("_name").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Name").IsNullable().HasColumnType("nvarchar").HasLength(100);
 			configuration.HasProperty(x => x.PartnerProductName).HasFieldName("_partnerProductName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PartnerProductName").IsNullable().HasColumnType("nvarchar").HasLength(100);
 			configuration.HasProperty(x => x.SSOTProductName).HasFieldName("_sSOTProductName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SSOTProductName").IsNullable().HasColumnType("nvarchar").HasLength(100);
 			configuration.HasProperty(x => x.SAPProductName).HasFieldName("_sAPProductName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SAPProductName").IsNullable().HasColumnType("nvarchar").HasLength(100);
 			configuration.HasProperty(x => x.GSMISProductName).HasFieldName("_gSMISProductName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("GSMISProductName").IsNullable().HasColumnType("nvarchar").HasLength(100);
-			configuration.HasProperty(x => x.PartnerShareType).HasFieldName("_partnerShareType").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PartnerShareType").IsNullable().HasColumnType("tinyint").HasPrecision(0).HasScale(0);
-			configuration.HasProperty(x => x.ShareValue1).HasFieldName("_shareValue1").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ShareValue1").IsNullable().HasColumnType("nvarchar").HasLength(50);
-			configuration.HasProperty(x => x.ShareValue2).HasFieldName("_shareValue2").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ShareValue2").IsNullable().HasColumnType("nvarchar").HasLength(50);
-			configuration.HasProperty(x => x.ShareValue3).HasFieldName("_shareValue3").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ShareValue3").IsNullable().HasColumnType("nvarchar").HasLength(50);
-			configuration.HasProperty(x => x.ShareValue4).HasFieldName("_shareValue4").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ShareValue4").IsNullable().HasColumnType("nvarchar").HasLength(50);
-			configuration.HasProperty(x => x.ShareValue5).HasFieldName("_shareValue5").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ShareValue5").IsNullable().HasColumnType("nvarchar").HasLength(50);
-			configuration.HasProperty(x => x.ShareValue6).HasFieldName("_shareValue6").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ShareValue6").IsNullable().HasColumnType("nvarchar").HasLength(50);
-			configuration.HasProperty(x => x.ShareValue7).HasFieldName("_shareValue7").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ShareValue7").IsNullable().HasColumnType("nvarchar").HasLength(50);
-			configuration.HasProperty(x => x.ShareValue8).HasFieldName("_shareValue8").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ShareValue8").IsNullable().HasColumnType("nvarchar").HasLength(50);
-			configuration.HasProperty(x => x.ShareValue9).HasFieldName("_shareValue9").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ShareValue9").IsNullable().HasColumnType("nvarchar").HasLength(50);
-			configuration.HasProperty(x => x.ShareValue10).HasFieldName("_shareValue10").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ShareValue10").IsNullable().HasColumnType("nvarchar").HasLength(50);
 			configuration.HasProperty(x => x.Description).HasFieldName("_description").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Description").IsNullable().HasColumnType("nvarchar").HasLength(250);
 			configuration.HasProperty(x => x.PartnerID).HasFieldName("_partnerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PartnerID").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
-			configuration.HasProperty(x => x.ActiveFlag).HasFieldName("_activeFlag").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ActiveFlag").IsNullable().HasColumnType("bit").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.DateRegistered).HasFieldName("_dateRegistered").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("DateRegistered").IsNullable().HasColumnType("datetime");
+			configuration.HasProperty(x => x.EffectiveDate).HasFieldName("_effectiveDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("EffectiveDate").IsNullable().HasColumnType("datetime");
+			configuration.HasProperty(x => x.EndDate).HasFieldName("_endDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("EndDate").IsNullable().HasColumnType("datetime");
+			configuration.HasProperty(x => x.MarketPlaceSectionID).HasFieldName("_marketPlaceSectionID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("MarketPlaceSectionID").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.SubCategoryID).HasFieldName("_subCategoryID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SubCategoryID").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ChargeFrequency).HasFieldName("_chargeFrequency").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ChargeFrequency").IsNullable().HasColumnType("nvarchar").HasLength(20);
+			configuration.HasProperty(x => x.ChargeType).HasFieldName("_chargeType").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ChargeType").IsNullable().HasColumnType("nvarchar").HasLength(20);
+			configuration.HasProperty(x => x.Charge).HasFieldName("_charge").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Charge").IsNullable().HasColumnType("numeric").HasPrecision(18).HasScale(0);
+			configuration.HasProperty(x => x.ApplyGST).HasFieldName("_applyGST").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ApplyGST").IsNullable().HasColumnType("bit").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.RevenuShareType).HasFieldName("_revenuShareType").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("RevenuShareType").IsNullable().HasColumnType("nvarchar").HasLength(20);
+			configuration.HasProperty(x => x.FixedOperatorRevenue).HasFieldName("_fixedOperatorRevenue").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("FixedOperatorRevenue").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.FixedPartnerRevenue).HasFieldName("_fixedPartnerRevenue").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("FixedPartnerRevenue").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.PercentageOperatorRevenue).HasFieldName("_percentageOperatorRevenue").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PercentageOperatorRevenue").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.PercentagePartnerRevenue).HasFieldName("_percentagePartnerRevenue").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PercentagePartnerRevenue").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.RecurringFixedMonth).HasFieldName("_recurringFixedMonth").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("RecurringFixedMonth").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ProductStatus).HasFieldName("_productStatus").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ProductStatus").IsNullable().HasColumnType("nvarchar").HasLength(20);
 		}
 	
 		public void PrepareProductAssociationConfigurations(MappingConfiguration<Product> configuration)
@@ -205,7 +362,7 @@ namespace OBMPDataModel
 	
 		public void PreparePaymentPropertyConfigurations(MappingConfiguration<Payment> configuration)
 		{
-            configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.SalesOrderID).HasFieldName("_salesOrderID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.PartnerID).HasFieldName("_partnerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PartnerID").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.PaymentDate).HasFieldName("_paymentDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PaymentDate").IsNullable().HasColumnType("datetime");
@@ -256,6 +413,7 @@ namespace OBMPDataModel
 			configuration.HasProperty(x => x.Escalation).HasFieldName("_escalation").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Escalation").IsNullable().HasColumnType("nvarchar").HasLength(100);
 			configuration.HasProperty(x => x.MSAContractDocument).HasFieldName("_mSAContractDocument").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("MSAContractDocument").IsNullable().HasColumnType("binary");
 			configuration.HasProperty(x => x.ServiceDescription).HasFieldName("_serviceDescription").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ServiceDescription").IsNullable().HasColumnType("nvarchar").HasLength(250);
+			configuration.HasProperty(x => x.IsActive).HasFieldName("_isActive").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("IsActive").IsNullable().HasColumnType("bit").HasPrecision(0).HasScale(0);
 		}
 	
 		public void PreparePartnerAssociationConfigurations(MappingConfiguration<Partner> configuration)
@@ -265,6 +423,52 @@ namespace OBMPDataModel
 			configuration.HasAssociation(x => x.OrderDetails).HasFieldName("_orderDetails").WithOpposite(x => x.Partner).ToColumn("PartnerID").HasConstraint((y, x) =>  x.PartnerID == y.ID ).WithDataAccessKind(DataAccessKind.ReadWrite);
 		}
 		
+		public MappingConfiguration<OrderStatusCode> GetOrderStatusCodeMappingConfiguration()
+		{
+			MappingConfiguration<OrderStatusCode> configuration = this.GetOrderStatusCodeClassConfiguration();
+			this.PrepareOrderStatusCodePropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<OrderStatusCode> GetOrderStatusCodeClassConfiguration()
+		{
+			MappingConfiguration<OrderStatusCode> configuration = new MappingConfiguration<OrderStatusCode>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("OrderStatusCode");
+	
+			return configuration;
+		}
+	
+		public void PrepareOrderStatusCodePropertyConfigurations(MappingConfiguration<OrderStatusCode> configuration)
+		{
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.Title).HasFieldName("_title").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Title").IsNotNullable().HasColumnType("nvarchar").HasLength(20);
+			configuration.HasProperty(x => x.Description).HasFieldName("_description").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Description").IsNullable().HasColumnType("nvarchar").HasLength(200);
+		}
+		public MappingConfiguration<OrderEvent> GetOrderEventMappingConfiguration()
+		{
+			MappingConfiguration<OrderEvent> configuration = this.GetOrderEventClassConfiguration();
+			this.PrepareOrderEventPropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<OrderEvent> GetOrderEventClassConfiguration()
+		{
+			MappingConfiguration<OrderEvent> configuration = new MappingConfiguration<OrderEvent>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("OrderEvent");
+	
+			return configuration;
+		}
+	
+		public void PrepareOrderEventPropertyConfigurations(MappingConfiguration<OrderEvent> configuration)
+		{
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.OrderID).HasFieldName("_orderID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("OrderID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.EventDate).HasFieldName("_eventDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("EventDate").IsNullable().HasColumnType("datetime");
+			configuration.HasProperty(x => x.Event).HasFieldName("_event").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Event").IsNullable().HasColumnType("nvarchar").HasLength(20);
+			configuration.HasProperty(x => x.UserID).HasFieldName("_userID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("UserID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+		}
 		public MappingConfiguration<OrderDetail> GetOrderDetailMappingConfiguration()
 		{
 			MappingConfiguration<OrderDetail> configuration = this.GetOrderDetailClassConfiguration();
@@ -285,7 +489,7 @@ namespace OBMPDataModel
 		public void PrepareOrderDetailPropertyConfigurations(MappingConfiguration<OrderDetail> configuration)
 		{
 			configuration.HasProperty(x => x.SalesOrderID).HasFieldName("_salesOrderID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
-            configuration.HasProperty(x => x.SalesOrderDetailID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_salesOrderDetailID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderDetailID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.SalesOrderDetailID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_salesOrderDetailID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderDetailID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.CustomerID).HasFieldName("_customerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("CustomerID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.PartnerID).HasFieldName("_partnerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PartnerID").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.ProductID).HasFieldName("_productID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ProductID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
@@ -330,7 +534,7 @@ namespace OBMPDataModel
 	
 		public void PrepareOrderPropertyConfigurations(MappingConfiguration<Order> configuration)
 		{
-            configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.OrderDate).HasFieldName("_orderDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("OrderDate").IsNullable().HasColumnType("datetime");
 			configuration.HasProperty(x => x.DueDate).HasFieldName("_dueDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("DueDate").IsNullable().HasColumnType("datetime");
 			configuration.HasProperty(x => x.Status).HasFieldName("_status").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Status").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
@@ -357,6 +561,28 @@ namespace OBMPDataModel
 			configuration.HasAssociation(x => x.Billings).HasFieldName("_billings").WithOpposite(x => x.Order).ToColumn("SalesOrderID").HasConstraint((y, x) =>  x.SalesOrderID == y.ID ).WithDataAccessKind(DataAccessKind.ReadWrite);
 		}
 		
+		public MappingConfiguration<MarketPlaceSection> GetMarketPlaceSectionMappingConfiguration()
+		{
+			MappingConfiguration<MarketPlaceSection> configuration = this.GetMarketPlaceSectionClassConfiguration();
+			this.PrepareMarketPlaceSectionPropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<MarketPlaceSection> GetMarketPlaceSectionClassConfiguration()
+		{
+			MappingConfiguration<MarketPlaceSection> configuration = new MappingConfiguration<MarketPlaceSection>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("MarketPlaceSection");
+	
+			return configuration;
+		}
+	
+		public void PrepareMarketPlaceSectionPropertyConfigurations(MappingConfiguration<MarketPlaceSection> configuration)
+		{
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.Name).HasFieldName("_name").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Name").IsNotNullable().HasColumnType("nvarchar").HasLength(100);
+			configuration.HasProperty(x => x.ModifiedDate).HasFieldName("_modifiedDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ModifiedDate").IsNotNullable().HasColumnType("datetime");
+		}
 		public MappingConfiguration<Customer> GetCustomerMappingConfiguration()
 		{
 			MappingConfiguration<Customer> configuration = this.GetCustomerClassConfiguration();
@@ -410,7 +636,7 @@ namespace OBMPDataModel
 	
 		public void PrepareBillingPropertyConfigurations(MappingConfiguration<Billing> configuration)
 		{
-            configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.SalesOrderID).HasFieldName("_salesOrderID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.SalesOrderDetailID).HasFieldName("_salesOrderDetailID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SalesOrderDetailID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
 			configuration.HasProperty(x => x.CustomerID).HasFieldName("_customerID").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("CustomerID").IsNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
@@ -428,6 +654,50 @@ namespace OBMPDataModel
 			configuration.HasAssociation(x => x.Order).HasFieldName("_order").WithOpposite(x => x.Billings).ToColumn("SalesOrderID").HasConstraint((x, y) =>  x.SalesOrderID == y.ID ).WithDataAccessKind(DataAccessKind.ReadWrite);
 		}
 		
+		public MappingConfiguration<ProductView> GetProductViewMappingConfiguration()
+		{
+			MappingConfiguration<ProductView> configuration = this.GetProductViewClassConfiguration();
+			this.PrepareProductViewPropertyConfigurations(configuration);
+
+			return configuration;
+		}
+
+		public MappingConfiguration<ProductView> GetProductViewClassConfiguration()
+		{
+			MappingConfiguration<ProductView> configuration = new MappingConfiguration<ProductView>();
+			configuration.MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("ProductView");
+	
+			return configuration;
+		}
+	
+		public void PrepareProductViewPropertyConfigurations(MappingConfiguration<ProductView> configuration)
+		{
+            configuration.HasProperty(x => x.ID).IsIdentity(KeyGenerator.Autoinc).HasFieldName("_iD").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ID").IsNotNullable().HasColumnType("bigint").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ProductCode).HasFieldName("_productCode").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ProductCode").IsNullable().HasColumnType("nvarchar").HasLength(20);
+			configuration.HasProperty(x => x.Name).HasFieldName("_name").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Name").IsNullable().HasColumnType("nvarchar").HasLength(100);
+			configuration.HasProperty(x => x.PartnerProductName).HasFieldName("_partnerProductName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PartnerProductName").IsNullable().HasColumnType("nvarchar").HasLength(100);
+			configuration.HasProperty(x => x.SSOTProductName).HasFieldName("_sSOTProductName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SSOTProductName").IsNullable().HasColumnType("nvarchar").HasLength(100);
+			configuration.HasProperty(x => x.SAPProductName).HasFieldName("_sAPProductName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("SAPProductName").IsNullable().HasColumnType("nvarchar").HasLength(100);
+			configuration.HasProperty(x => x.GSMISProductName).HasFieldName("_gSMISProductName").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("GSMISProductName").IsNullable().HasColumnType("nvarchar").HasLength(100);
+			configuration.HasProperty(x => x.Description).HasFieldName("_description").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Description").IsNullable().HasColumnType("nvarchar").HasLength(250);
+			configuration.HasProperty(x => x.DateRegistered).HasFieldName("_dateRegistered").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("DateRegistered").IsNullable().HasColumnType("datetime");
+			configuration.HasProperty(x => x.EffectiveDate).HasFieldName("_effectiveDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("EffectiveDate").IsNullable().HasColumnType("datetime");
+			configuration.HasProperty(x => x.EndDate).HasFieldName("_endDate").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("EndDate").IsNullable().HasColumnType("datetime");
+			configuration.HasProperty(x => x.ChargeFrequency).HasFieldName("_chargeFrequency").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ChargeFrequency").IsNullable().HasColumnType("nvarchar").HasLength(20);
+			configuration.HasProperty(x => x.ChargeType).HasFieldName("_chargeType").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ChargeType").IsNullable().HasColumnType("nvarchar").HasLength(20);
+			configuration.HasProperty(x => x.Charge).HasFieldName("_charge").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("Charge").IsNullable().HasColumnType("numeric").HasPrecision(18).HasScale(0);
+			configuration.HasProperty(x => x.ApplyGST).HasFieldName("_applyGST").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ApplyGST").IsNullable().HasColumnType("bit").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.RevenuShareType).HasFieldName("_revenuShareType").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("RevenuShareType").IsNullable().HasColumnType("nvarchar").HasLength(20);
+			configuration.HasProperty(x => x.FixedOperatorRevenue).HasFieldName("_fixedOperatorRevenue").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("FixedOperatorRevenue").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.FixedPartnerRevenue).HasFieldName("_fixedPartnerRevenue").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("FixedPartnerRevenue").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.PercentageOperatorRevenue).HasFieldName("_percentageOperatorRevenue").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PercentageOperatorRevenue").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.PercentagePartnerRevenue).HasFieldName("_percentagePartnerRevenue").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PercentagePartnerRevenue").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.RecurringFixedMonth).HasFieldName("_recurringFixedMonth").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("RecurringFixedMonth").IsNullable().HasColumnType("int").HasPrecision(0).HasScale(0);
+			configuration.HasProperty(x => x.ProductStatus).HasFieldName("_productStatus").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ProductStatus").IsNullable().HasColumnType("nvarchar").HasLength(20);
+            configuration.HasProperty(x => x.MarketPlaceSection).HasFieldName("_expr1").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("MarketPlaceSection").IsNotNullable().HasColumnType("nvarchar").HasLength(100);
+            configuration.HasProperty(x => x.PartnerName).HasFieldName("_expr2").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("PartnerName").IsNullable().HasColumnType("nvarchar").HasLength(50);
+            configuration.HasProperty(x => x.ProductCategoryName).HasFieldName("_expr3").WithDataAccessKind(DataAccessKind.ReadWrite).ToColumn("ProductCategoryName").IsNotNullable().HasColumnType("nvarchar").HasLength(100);
+		}
 	}
 }
 #pragma warning restore 1591

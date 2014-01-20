@@ -5,6 +5,8 @@
 <ul id="myTab" class="nav nav-tabs">
     <li  class="active"><a href="~/Product/Manage" class="btn-large">Product List</a></li>
     <li><a href="~/Product/Add"  class="btn-large">Add New Product</a></li>
+    <li><a href="~/Product/Category" class="btn-large">Category</a></li>
+    <li><a href="~/Product/MarketPlaceSection"  class="btn-large">Market Place Section</a></li>
 </ul>
 
 
@@ -13,24 +15,35 @@
     <div class='well'>
         <div class='row'> 
                 <div class='span4'>
-                    <div>ProductID: #: ID #</div>
+                    <div><b>Product ID: </b> #: ID #</div>
+                    <div>Product Code: #: ProductCode #</div>
                     <div>Name: #: Name #</div>
-                    <div>Description: #: Description #</div>
-                    <div>ActiveFlag: #: ActiveFlag #</div>
+                        <div>Product Status: #: ProductStatus #</div>
+                    <div>Charge Frequence: #: ChargeFrequency #</div>
+                    <div>Charge: AUD#: Charge #</div>
+                  <div>Effective Date: #=kendo.toString(EffectiveDate,"yyyy-MM-dd") #</div>
+                  <div>End Date: #=kendo.toString(EndDate,"yyyy-MM-dd") #</div>
+                  
                 </div>
 
              <div class='span4'>
-                  <div>Partner: #: Partner #</div>
-                  <div>PartnerShareType: #: PartnerShareType #</div>
-                  <div>ShareValue1: #: ShareValue1 #</div>
-                  <div>DateRegistered: #=kendo.toString(DateRegistered,"yyyy-MM-dd") #</div>
+                  <div>Market Place Section: #: MarketPlaceSection #</div>
+                  <div>Partner: #: PartnerName #</div>
+                  <div>Category: #: ProductCategoryName #</div>
+
+                  <div>Revenue Share Type: #: RevenuShareType #</div>
+                  <div>FixedPartnerRevenue: #: FixedPartnerRevenue #</div>
+                  <div>FixedOperatorRevenue: #: FixedOperatorRevenue #</div>
+                  <div>PercentagePartnerRevenue: #: PercentagePartnerRevenue #</div>
+                  <div>PercentageOperatorRevenue: #: PercentageOperatorRevenue #</div>
+                    <div>Description: #: Description #</div>
             </div>
         </div>
     </div>
 </script>
 
-@(Html.Kendo().Grid<OBMPDataModel.Product>()
-      .Name("ProductList")
+@(Html.Kendo().Grid<OBMPDataModel.ProductView>()
+      .Name("ProductView")
       .DataSource(dataSource => dataSource // Configure the grid data source
           .Ajax() // Specify that ajax binding is used
           .Model(model =>
@@ -46,11 +59,13 @@
           // Create a column bound to the ID property
           columns.Bound(p => p.ID).Filterable(false);
           columns.Bound(p => p.Name);
-          columns.Bound(p => p.Partner);
-          columns.Bound(p => p.PartnerShareType);
-          columns.Bound(p => p.ShareValue1);
+          columns.Bound(p => p.ChargeFrequency);
+          columns.Bound(p => p.ChargeType);
+          columns.Bound(p => p.Charge);  
           //columns.Bound(p => p.DateRegistered).Format("{0:d}");
-          columns.Bound(p => p.ActiveFlag);
+          //columns.Bound(p => p.EndDate).Format("{0:d}");
+          columns.Bound(p => p.ProductStatus).Title("Status");
+          columns.Bound(p => p.PartnerName).Title("Partner");
           columns.Command(commands => { commands.Edit(); }).Width(100);
       })
       .Pageable() // Enable paging

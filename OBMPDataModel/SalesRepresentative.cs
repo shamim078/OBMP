@@ -18,15 +18,12 @@ using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
-using System.ComponentModel.DataAnnotations;
 
 namespace OBMPDataModel	
 {
 	public partial class SalesRepresentative
 	{
 		private int _iD;
-		[Required()]
-		[Key()]
 		public virtual int ID
 		{
 			get
@@ -40,7 +37,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _name;
-		[StringLength(50)]
 		public virtual string Name
 		{
 			get
@@ -54,7 +50,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _email;
-		[StringLength(50)]
 		public virtual string Email
 		{
 			get
@@ -68,7 +63,6 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _dateCreated;
-		[DataType(DataType.Date)]
 		public virtual DateTime? DateCreated
 		{
 			get

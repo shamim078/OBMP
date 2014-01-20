@@ -18,7 +18,6 @@ using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
-using System.ComponentModel.DataAnnotations;
 using OBMPDataModel;
 
 namespace OBMPDataModel	
@@ -26,8 +25,6 @@ namespace OBMPDataModel
 	public partial class Billing
 	{
 		private long _iD;
-		[Required()]
-		[Key()]
 		public virtual long ID
 		{
 			get
@@ -80,7 +77,6 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _paymentDate;
-		[DataType(DataType.DateTime)]
 		public virtual DateTime? PaymentDate
 		{
 			get
@@ -107,7 +103,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _billMethod;
-		[StringLength(50)]
 		public virtual string BillMethod
 		{
 			get
@@ -121,7 +116,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _billingAccountNumber;
-		[StringLength(50)]
 		public virtual string BillingAccountNumber
 		{
 			get
@@ -135,7 +129,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _billingAccountName;
-		[StringLength(50)]
 		public virtual string BillingAccountName
 		{
 			get
@@ -149,7 +142,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _invoiceReferenceNumber;
-		[StringLength(50)]
 		public virtual string InvoiceReferenceNumber
 		{
 			get

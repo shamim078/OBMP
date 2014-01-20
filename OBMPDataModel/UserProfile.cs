@@ -18,15 +18,13 @@ using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
-using System.ComponentModel.DataAnnotations;
+using OBMPDataModel;
 
 namespace OBMPDataModel	
 {
 	public partial class UserProfile
 	{
 		private int _userId;
-		[Required()]
-		[Key()]
 		public virtual int UserId
 		{
 			get
@@ -49,6 +47,15 @@ namespace OBMPDataModel
 			set
 			{
 				this._userName = value;
+			}
+		}
+		
+		private IList<Webpages_Role> _webpages_Roles = new List<Webpages_Role>();
+		public virtual IList<Webpages_Role> Webpages_Roles
+		{
+			get
+			{
+				return this._webpages_Roles;
 			}
 		}
 		

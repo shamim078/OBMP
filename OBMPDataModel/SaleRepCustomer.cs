@@ -18,15 +18,12 @@ using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
-using System.ComponentModel.DataAnnotations;
 
 namespace OBMPDataModel	
 {
 	public partial class SaleRepCustomer
 	{
 		private int _iD;
-		[Required()]
-		[Key()]
 		public virtual int ID
 		{
 			get
@@ -40,7 +37,6 @@ namespace OBMPDataModel
 		}
 		
 		private int _salesRepresentativeID;
-		[Required()]
 		public virtual int SalesRepresentativeID
 		{
 			get
@@ -54,7 +50,6 @@ namespace OBMPDataModel
 		}
 		
 		private int _customerID;
-		[Required()]
 		public virtual int CustomerID
 		{
 			get
@@ -68,7 +63,6 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _mappedDate;
-		[DataType(DataType.Date)]
 		public virtual DateTime? MappedDate
 		{
 			get

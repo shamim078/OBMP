@@ -18,7 +18,6 @@ using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
-using System.ComponentModel.DataAnnotations;
 using OBMPDataModel;
 
 namespace OBMPDataModel	
@@ -26,8 +25,6 @@ namespace OBMPDataModel
 	public partial class Partner
 	{
 		private int _iD;
-		[Required()]
-		[Key()]
 		public virtual int ID
 		{
 			get
@@ -41,7 +38,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _name;
-		[StringLength(50)]
 		public virtual string Name
 		{
 			get
@@ -55,7 +51,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _mSAReference;
-		[StringLength(20)]
 		public virtual string MSAReference
 		{
 			get
@@ -69,7 +64,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _address;
-		[StringLength(100)]
 		public virtual string Address
 		{
 			get
@@ -83,7 +77,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _partnerType;
-		[StringLength(20)]
 		public virtual string PartnerType
 		{
 			get
@@ -110,7 +103,6 @@ namespace OBMPDataModel
 		}
 		
 		private DateTime? _dateRegistered;
-		[DataType(DataType.DateTime)]
 		public virtual DateTime? DateRegistered
 		{
 			get
@@ -124,7 +116,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _primaryContact;
-		[StringLength(25)]
 		public virtual string PrimaryContact
 		{
 			get
@@ -138,7 +129,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _primaryContactDetail;
-		[StringLength(100)]
 		public virtual string PrimaryContactDetail
 		{
 			get
@@ -152,7 +142,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _secondaryContact;
-		[StringLength(25)]
 		public virtual string SecondaryContact
 		{
 			get
@@ -166,7 +155,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _secondaryContactDetail;
-		[StringLength(100)]
 		public virtual string SecondaryContactDetail
 		{
 			get
@@ -180,7 +168,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _technicalContact;
-		[StringLength(25)]
 		public virtual string TechnicalContact
 		{
 			get
@@ -194,7 +181,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _technicalContactDetail;
-		[StringLength(100)]
 		public virtual string TechnicalContactDetail
 		{
 			get
@@ -208,7 +194,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _adminContact;
-		[StringLength(25)]
 		public virtual string AdminContact
 		{
 			get
@@ -222,7 +207,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _adminContactDetail;
-		[StringLength(100)]
 		public virtual string AdminContactDetail
 		{
 			get
@@ -236,7 +220,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _escalation;
-		[StringLength(100)]
 		public virtual string Escalation
 		{
 			get
@@ -263,7 +246,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _serviceDescription;
-		[StringLength(250)]
 		public virtual string ServiceDescription
 		{
 			get
@@ -273,6 +255,19 @@ namespace OBMPDataModel
 			set
 			{
 				this._serviceDescription = value;
+			}
+		}
+		
+		private bool? _isActive;
+		public virtual bool? IsActive
+		{
+			get
+			{
+				return this._isActive;
+			}
+			set
+			{
+				this._isActive = value;
 			}
 		}
 		

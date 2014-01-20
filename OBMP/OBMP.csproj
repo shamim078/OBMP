@@ -176,6 +176,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ContextFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OptusController.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Data\Customer.cs">
       <DependentUpon>Northwind.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\MapSQLWithModel.cs" />
     <Compile Include="Data\Northwind.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -913,6 +915,10 @@
     <Content Include="Views\Shared\_BoBSaleRepLayout.cshtml" />
     <Content Include="Views\Shared\_DefaultLayout.cshtml" />
     <Content Include="Views\Order\Reports.cshtml" />
+    <Content Include="Views\Product\Category.cshtml" />
+    <Content Include="Views\Product\SubCategory.cshtml" />
+    <Content Include="Views\Product\MarketPlaceSection.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TextBoxSmall.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

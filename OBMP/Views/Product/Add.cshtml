@@ -5,13 +5,16 @@
 <script src="~/Scripts/toastr.js"></script>
 
 @{
-    ViewBag.Title = "Patner Management";
+    ViewBag.Title = "Manage Patner Product";
 }
 
 <ul id="myTab" class="nav nav-tabs">
     <li><a href="~/Product/Manage" class="btn-large">Product List</a></li>
     <li  class="active"><a href="~/Product/Add"  class="btn-large">Add New Product</a></li>
+    <li><a href="~/Product/Category" class="btn-large">Category</a></li>
+    <li><a href="~/Product/MarketPlaceSection"  class="btn-large">Market Place Section</a></li>
 </ul>
+
 
 <script>
 
@@ -30,11 +33,66 @@
         "hideMethod": "fadeOut"
     }
 
+    $(function () {
+        $('#RevenuShareTypeRadio1').click(function () {
+            //alert($(this).attr('value'));
+            $('#FixedRevenue').removeClass('hidden');
+            $('#PercentageRevenue').addClass('hidden');
+        });
 
+        $('#RevenuShareTypeRadio2').click(function () {
+            //alert($(this).attr('value'));
+            $('#FixedRevenue').addClass('hidden');
+            $('#PercentageRevenue').removeClass('hidden');
+        });
+
+        $('#radioChargeType1').click(function () {
+            $('#TierData').addClass('hidden');
+        });
+        $('#radioChargeType2').click(function () {
+            $('#TierData').addClass('hidden');
+        });
+        $('#radioChargeType3').click(function () {
+            $('#TierData').removeClass('hidden');
+        });
+
+        wnd = $("#modalWindow").kendoWindow({
+            title: "Delete confirmation",
+            modal: true,
+            visible: false,
+            resizable: false,
+            width: 300
+        }).data("kendoWindow");
+
+    });
+
+    function openWindow(e) {
+
+        e.preventDefault();
+
+        $("#modalWindow").parent().find(".k-window-action").css("visibility", "hidden");
+
+        var grid = this;
+        var row = $(e.currentTarget).closest("tr");
+        wnd.center().open();
+
+        $("#no").click(function () {
+            row = null;
+            wnd.close();
+        });
+
+        $("#yes").click(function () {
+            
+            grid.removeRow(row);
+            row = null;
+            wnd.close();
+        });
+    }
 
 </script>
 
-@if (TempData["Success"] != null && TempData["Success"].ToString()=="true") {
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "true")
+{
                     
                         <script>
 
@@ -43,7 +101,7 @@
 
                             })();
                         </script>
-                }
+}
 
 @if (TempData["Success"] != null && TempData["Success"].ToString() == "false")
 {
@@ -53,16 +111,21 @@
                                 toastr.error('Some erroe occured :(');
                             })();
                         </script>
-                }
+}
 
 
 
-<section class="well">
+<section>
 
     @using (Html.BeginForm("Add", "Product", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
+
+
+        <div class="well well-small">        
+        
+            <h4>Product Info</h4> <hr />
 
         <div class="row">
 
@@ -123,179 +186,26 @@
                     @Html.LabelFor(model => model.Description, new { @class = "control-label" })
 
                     <div class="controls">
-
-                        
-                        @Html.TextAreaFor(modle=>Model.Description)
-
+                        @Html.TextAreaFor(modle => Model.Description)
                         @Html.ValidationMessageFor(model => model.Description)
                     </div>
                 </div>
-
 
             </div>
 
         </div> 
 
-       
-
-        <div class="row">
-            <div class="span4">
-
-                <div class="control-group">
-
-@*                    @Html.LabelFor(model => model.Partner, new { @class = "control-label" })
-                    <div class="controls">
-                        @Html.EditorFor(model => model.Partner)
-                        @Html.ValidationMessageFor(model => model.Partner)
-                    </div>*@
-
-                    <label class="control-label" for="Partner">Partner</label>
-                    <div class="controls">
-                      <input type="text" id="Partner" class="k-textbox">
-                    </div>
-
-                </div>
-           </div>
-
-
-            <div class="span4">
-
-                <div class="control-group">
-                    @Html.LabelFor(model => model.PartnerShareType, new { @class = "control-label" })
-
-                    <div class="controls">
-                        @Html.EditorFor(model => model.PartnerShareType)
-                        @Html.ValidationMessageFor(model => model.PartnerShareType)
-                    </div>
-                </div>
-           </div>
-        </div>
-
-        <div class="row">
-                
-            <div class="span4">
-                <div class="control-group">
-                    @Html.LabelFor(model => model.ShareValue1, new { @class = "control-label" })
-
-                    <div class="controls">
-                        @Html.EditorFor(model => model.ShareValue1)
-                        @Html.ValidationMessageFor(model => model.ShareValue1)
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="span4">
-                <div class="control-group">
-                    @Html.LabelFor(model => model.ShareValue2, new { @class = "control-label" })
-
-                    <div class="controls">
-                        @Html.EditorFor(model => model.ShareValue2)
-                        @Html.ValidationMessageFor(model => model.ShareValue2)
-                    </div>
-                </div>
-
-            </div>
-      </div>
 
         <div class="row">
 
             <div class="span4">
 
                 <div class="control-group">
-                    @Html.LabelFor(model => model.ShareValue3, new { @class = "control-label" })
+                    @Html.LabelFor(model => model.EffectiveDate, new { @class = "control-label" })
 
                     <div class="controls">
-                        @Html.EditorFor(model => model.ShareValue3)
-                        @Html.ValidationMessageFor(model => model.ShareValue3)
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="span4">
-                <div class="control-group">
-                    @Html.LabelFor(model => model.ShareValue4, new { @class = "control-label" })
-
-                    <div class="controls">
-                        @Html.EditorFor(model => model.ShareValue4)
-                        @Html.ValidationMessageFor(model => model.ShareValue4)
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="row">
-
-            <div class ="span4">
-
-                <div class="control-group">
-                    @Html.LabelFor(model => model.ShareValue5, new { @class = "control-label" })
-
-                    <div class="controls">
-                        @Html.EditorFor(model => model.ShareValue5)
-                        @Html.ValidationMessageFor(model => model.ShareValue5)
-                    </div>
-                </div>
-
-
-            </div>
-
-            <div class="span4">
-
-                <div class="control-group">
-                    @Html.LabelFor(model => model.ShareValue6, new { @class = "control-label" })
-
-                    <div class="controls">
-                        @Html.EditorFor(model => model.ShareValue6)
-                        @Html.ValidationMessageFor(model => model.ShareValue6)
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="row">
-
-            <div class="span4">
-                <div class="control-group">
-                    @Html.LabelFor(model => model.ShareValue7, new { @class = "control-label" })
-
-                    <div class="controls">
-                        @Html.EditorFor(model => model.ShareValue7)
-                        @Html.ValidationMessageFor(model => model.ShareValue7)
-                    </div>
-                </div>
-            </div>
-
-            <div class="span4">
-
-                <div class="control-group">
-                    @Html.LabelFor(model => model.ShareValue8, new { @class = "control-label" })
-
-                    <div class="controls">
-                        @Html.EditorFor(model => model.ShareValue8)
-                        @Html.ValidationMessageFor(model => model.ShareValue8)
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        
-        <div class="row">
-
-            <div class="span4">
-
-                <div class="control-group">
-                    @Html.LabelFor(model => model.ShareValue9, new { @class = "control-label" })
-
-                    <div class="controls">
-                        @Html.EditorFor(model => model.ShareValue9)
-                        @Html.ValidationMessageFor(model => model.ShareValue9)
+                        @Html.Kendo().DatePicker().Name("EffectiveDate").Value(DateTime.Today).Format("yyyy-MM-dd")
+                        @Html.ValidationMessageFor(model => model.EffectiveDate)
                     </div>
                 </div>
 
@@ -304,49 +214,359 @@
             <div class="span4">
 
                 <div class="control-group">
-                    @Html.LabelFor(model => model.ShareValue10, new { @class = "control-label" })
+                    @Html.LabelFor(model => model.EndDate, new { @class = "control-label" })
 
                     <div class="controls">
-                        @Html.EditorFor(model => model.ShareValue10)
-                        @Html.ValidationMessageFor(model => model.ShareValue10)
+                        @Html.Kendo().DatePicker().Name("EndDate").Value(DateTime.Today.AddMonths(6)).Format("yyyy-MM-dd")
+                        @Html.ValidationMessageFor(model => model.EndDate)
                     </div>
                 </div>
 
+
             </div>
 
-        </div>
-
+        </div>       
 
         <div class="row">
+            <div class="span4">
+
+                <div class="control-group">
+
+                    @Html.LabelFor(model => model.SubCategoryID, "Category", new { @class = "control-label" })
+                    <div class="controls">
+                            @(Html.Kendo().DropDownListFor(model => model.SubCategoryID)
+                                    .BindTo((System.Collections.IEnumerable)ViewData["category"])
+                                    .DataValueField("ID")
+                                    .DataTextField("Name")
+                            )
+                          @Html.ValidationMessageFor(model => model.SubCategoryID)
+                    </div>
+
+                </div>
+           </div>
+
 
             <div class="span4">
 
-
                 <div class="control-group">
-                    @Html.LabelFor(model => model.ActiveFlag, new { @class = "control-label" })
+                    @Html.LabelFor(model => model.MarketPlaceSectionID, "Marketplace Section", new { @class = "control-label" })
 
                     <div class="controls">
-                        @Html.EditorFor(model => model.ActiveFlag)
-                        @Html.ValidationMessageFor(model => model.ActiveFlag)
+                            @(Html.Kendo().DropDownListFor(model => model.MarketPlaceSectionID)
+                                    .BindTo((System.Collections.IEnumerable)ViewData["section"])
+                                    .DataValueField("ID")
+                                    .DataTextField("Name")
+                            )
+
+                        @Html.ValidationMessageFor(model => model.MarketPlaceSectionID)
+                    </div>
+                </div>
+           </div>
+        </div>       
+
+        <div class="row">
+            <div class="span4">
+
+                <div class="control-group">
+
+                    @Html.LabelFor(model => model.PartnerID,"Select Partner", new { @class = "control-label" })
+                    <div class="controls">
+                            @(Html.Kendo().DropDownListFor(model => model.PartnerID)
+                                    .BindTo((System.Collections.IEnumerable)ViewData["partner"])
+                                    .DataValueField("ID")
+                                    .DataTextField("Name")
+                            )
+                          @Html.ValidationMessageFor(model => model.PartnerID)
+                    </div>
+
+                </div>
+           </div>
+
+
+            <div class="span4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ProductStatus,"Product Status", new { @class = "control-label" })
+
+                    <div class="controls">
+                        @(Html.Kendo().DropDownList()
+                              .Name("ProductStatus")
+                              .DataTextField("Text")
+                              .DataValueField("Value")
+                              .BindTo(new List<SelectListItem>() {
+                                  new SelectListItem() {
+                                      Text = "Active",
+                                      Value = "true"
+                                  },
+                                  new SelectListItem() {
+                                      Text = "Inactive",
+                                      Value = "false"
+                                  },
+                                  new SelectListItem() {
+                                      Text = "Pending Approval",
+                                      Value = "PendingApproval"
+                                  }                                  
+                              })
+                              .Value("true")
+                        )
+
+                        @Html.ValidationMessageFor(model => model.ProductStatus)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+</div>
+
+<div class="well well-small">
+
+        <h4>Pricing</h4> <hr />
+
+        <div class="row">
+            <div class="span8">
+
+                <div class="control-group">
+
+                    <label class="control-label">Frequency</label>
+
+                    <div class="controls">
+
+                        <label class="radio inline">
+                          <input type="radio" id="ChargeFrequencyRadio1" value="OneOff" name="ChargeFrequency"  checked="checked"> One off
+                        </label>
+                        <label class="radio inline">
+                          <input type="radio" id="ChargeFrequencyRadio2" value="Recurring" name="ChargeFrequency"> Recurring ongoing
+                        </label>
+                        <div class="input-prepend input-append">
+                        <label class="radio inline">
+                          <input type="radio" id="ChargeFrequencyRadio3" value="RecurringFixed" name="ChargeFrequency"> Recurring Fixed 
+                            
+                          <input type="text" name="RecurringFixedMonth" id="RecurringFixedMonth" class="input-mini" value="24" /> 
+                            <span class="add-on">months</span>
+                        </label>
+                                </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span8">
+
+                <div class="control-group">
+
+                    <label class="control-label">Charge Type</label>
+
+                    <div class="controls">
+
+                        <label class="radio inline">
+                          <input type="radio" id="radioChargeType1" value="OneOff" name="ChargeType"  checked="checked"> Fixed
+                        </label>
+                        <label class="radio inline">
+                          <input type="radio" id="radioChargeType2" value="Usage" name="ChargeType"> Usage
+                        </label>
+                        <label class="radio inline">
+                          <input type="radio" id="radioChargeType3" value="Tiered" name="ChargeType"> Tiered usage
+                        </label>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+                
+            <div class="span4">
+                <div class="control-group">
+                    
+                    <label class="control-label">Charge</label>
+                    <div class="controls">
+
+                        <div class="input-prepend input-append">
+                          <span class="add-on">$</span>
+                          <input class="input-mini" id="Charge" name="Charge" type="text" value="0">
+                          <span class="add-on">.00</span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Charge)
                     </div>
                 </div>
 
             </div>
 
             <div class="span4">
-
                 <div class="control-group">
-                    @Html.LabelFor(model => model.DateRegistered, new { @class = "control-label" })
+                    <label class="control-label">Apply GST</label>
 
                     <div class="controls">
-                        @Html.Kendo().DatePickerFor(modle=>Model.DateRegistered).Value(DateTime.Today)
-                        @Html.ValidationMessageFor(model => model.DateRegistered)
+                        @*@Html.EditorFor(model=>model.ApplyGST)*@
+                        @Html.CheckBox("ApplyGST", true)
+                        @Html.ValidationMessageFor(model => model.ApplyGST)
+                        <div class="hidden">
+                            @Html.Kendo().DatePicker().Name("DateRegistered").Value(DateTime.Today).Format("yyyy-MM-dd")
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+      </div>
+</div>                        
+        
+<div class="well well-small hidden" id="TierData">
+
+    <div class="row">
+
+        <div class="span8">
+
+            @(Html.Kendo().Grid<OBMPDataModel.ProductTieredUsage >()    
+    .Name("ProductTieredUsage")
+    .Columns(columns => {
+        columns.Bound(c => c.ID).Visible(false);
+        columns.Bound(c => c.Lower).Title("Lower Range").EditorTemplateName("TextBoxSmall");
+        columns.Bound(c => c.Upper).Title("Upper Range").EditorTemplateName("TextBoxSmall"); ;
+        columns.Bound(c => c.Charge).Title("Charge(AUD)").EditorTemplateName("TextBoxSmall"); ;
+        columns.Command(c => c.Custom("Delete").Click("openWindow"));
+    })
+    .ToolBar(toolbar => toolbar.Create().Text("Add new tier"))
+    .Editable(editable => { editable.Mode(GridEditMode.InCell).CreateAt(GridInsertRowPosition.Bottom); editable.DisplayDeleteConfirmation(false); })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Model(model => 
+            {
+                model.Id(c => c.ID);
+                model.Field(c => c.ID).Editable(false);
+            })
+            .ServerOperation(false)
+    )    
+)
+
+
+        </div>
+
+    </div>
+
+
+
+</div>        
+        
+<div class="well well-small">
+
+        <h4>Revenue Share</h4> <hr />
+        
+    <div class="row">
+
+            <div class="span8">
+
+                <div class="control-group">
+
+                    <label class="control-label">Share Type</label>
+
+                    <div class="controls">
+                        <label class="radio inline">
+                          <input type="radio" id="RevenuShareTypeRadio1" value="Fixed" name="RevenuShareType" checked="checked"> Fixed
+                        </label>
+                        <label class="radio inline">
+                          <input type="radio" id="RevenuShareTypeRadio2" value="Percentage" name="RevenuShareType"> Percentage
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+
+    <div class="row" id="FixedRevenue">
+
+        <div class="span4">
+
+                <div class="control-group">
+                    
+                    <label class="control-label">Partner Share</label>
+                    <div class="controls">
+
+                        <div class="input-prepend input-append">
+                          <span class="add-on">$</span>
+                          <input class="input-mini" id="FixedPartnerRevenue" name="FixedPartnerRevenue" type="text" value="0">
+                          <span class="add-on">.00</span>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+
+        <div class="span4">
+
+                <div class="control-group">
+                    
+                    <label class="control-label">Optus Share</label>
+                    <div class="controls">
+
+                        <div class="input-prepend input-append">
+                          <span class="add-on">$</span>
+                          <input class="input-mini" id="FixedOperatorRevenue" name="FixedOperatorRevenue" type="text" value="0">
+                          <span class="add-on">.00</span>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+
+    </div>
+
+    <div class="row hidden" id="PercentageRevenue">
+
+        <div class="span4">
+
+                <div class="control-group">
+                    
+                    <label class="control-label">Partner Share</label>
+                    <div class="controls">
+
+                        <div class="input-prepend input-append">
+                          <input class="input-mini" id="PercentagePartnerRevenue" name="PercentagePartnerRevenue" type="text" value="0">
+                          <span class="add-on">%</span>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+
+        <div class="span4">
+
+                <div class="control-group">
+                    
+                    <label class="control-label">Optus Share</label>
+                    <div class="controls">
+
+                        <div class="input-prepend input-append">
+                          <input class="input-mini" id="PercentageOperatorRevenue" name="PercentageOperatorRevenue" type="text" value="0">
+                          <span class="add-on">%</span>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+            <div class="span4">
+
+                <div class="control-group">
+                  
+                    <div class="controls hidden">
+                        @Html.Kendo().DatePicker().Name("DateRegistered").Value(DateTime.Today).Format("yyyy-MM-dd")
+                  
                     </div>
                 </div>
             </div>
 
         </div>
-
+</div>            
         
         <p class="pull-right">
             <input type="submit" value="Save Product Data" class="btn btn-primary" />
@@ -355,7 +575,16 @@
     
     }
 
+
 </section>
+
+<div id="modalWindow">
+    <strong>Are you sure to delete?</strong>
+    <hr />
+    <button id="yes" class="btn btn-primary">Yes</button>
+    <button id="no" class="btn">No</button>
+</div>
+
 
 
 @section Scripts {

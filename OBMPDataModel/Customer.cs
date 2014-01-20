@@ -18,7 +18,6 @@ using Telerik.OpenAccess.Metadata;
 using Telerik.OpenAccess.Data.Common;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
-using System.ComponentModel.DataAnnotations;
 using OBMPDataModel;
 
 namespace OBMPDataModel	
@@ -26,8 +25,6 @@ namespace OBMPDataModel
 	public partial class Customer
 	{
 		private long _iD;
-		[Required()]
-		[Key()]
 		public virtual long ID
 		{
 			get
@@ -41,7 +38,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _uID;
-		[StringLength(50)]
 		public virtual string UID
 		{
 			get
@@ -55,7 +51,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _name;
-		[StringLength(100)]
 		public virtual string Name
 		{
 			get
@@ -69,7 +64,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _accountReference;
-		[StringLength(50)]
 		public virtual string AccountReference
 		{
 			get
@@ -83,7 +77,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _address;
-		[StringLength(200)]
 		public virtual string Address
 		{
 			get
@@ -97,7 +90,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _contactPerson;
-		[StringLength(50)]
 		public virtual string ContactPerson
 		{
 			get
@@ -111,7 +103,6 @@ namespace OBMPDataModel
 		}
 		
 		private string _contactDetail;
-		[StringLength(200)]
 		public virtual string ContactDetail
 		{
 			get
