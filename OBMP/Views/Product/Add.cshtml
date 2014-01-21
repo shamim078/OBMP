@@ -89,6 +89,27 @@
         });
     }
 
+    function AddTierDataToForm() {
+
+        var gview = $('#ProductTieredUsage').data('kendoGrid');
+        var items = gview.dataSource.data();
+
+        for (i = 0; i < items.length; i++) {
+
+            var item = items[i];
+            var inputElement1 = "<input type='hidden' name='ProductTieredUsage[" + i.toString() + "].Lower'" + "value='" + item.Lower + "' />";
+            var inputElement2 = "<input type='hidden' name='ProductTieredUsage[" + i.toString() + "].Upper'" + "value='" + item.Upper + "' />";
+            var inputElement3 = "<input type='hidden' name='ProductTieredUsage[" + i.toString() + "].Charge'" + "value='" + item.Charge + "' />";
+
+            $('#AddProductForm').append(inputElement1).append(inputElement2).append(inputElement3);
+
+        }
+
+        //sending data count for server processing
+        var inputDataRowCount = "<input type='hidden' name='ProductTieredUsageCount'" + "value='" + items.length + "' />";
+        $('#AddProductForm').append(inputDataRowCount);
+    }
+
 </script>
 
 @if (TempData["Success"] != null && TempData["Success"].ToString() == "true")
@@ -117,7 +138,7 @@
 
 <section>
 
-    @using (Html.BeginForm("Add", "Product", FormMethod.Post, new { @class = "form-horizontal" }))
+    @using (Html.BeginForm("Add", "Product", FormMethod.Post, new { @class = "form-horizontal", @id="AddProductForm" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
@@ -296,11 +317,11 @@
                               .BindTo(new List<SelectListItem>() {
                                   new SelectListItem() {
                                       Text = "Active",
-                                      Value = "true"
+                                      Value = "Active"
                                   },
                                   new SelectListItem() {
                                       Text = "Inactive",
-                                      Value = "false"
+                                      Value = "Inactive"
                                   },
                                   new SelectListItem() {
                                       Text = "Pending Approval",
@@ -569,7 +590,7 @@
 </div>            
         
         <p class="pull-right">
-            <input type="submit" value="Save Product Data" class="btn btn-primary" />
+            <input type="submit" value="Save Product Data" class="btn btn-primary" onclick="AddTierDataToForm()"/>
             <input type="reset" value="Reset Data" class="btn"  />
         </p>
     

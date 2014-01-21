@@ -223,7 +223,7 @@
 
                 @*<p class="pull-right">*@
 
-                    <input type="submit" value="Save Order" class="btn btn-primary" id="submitButton" onclick="showData()" />
+                    <input type="submit" value="Save Order" class="btn btn-primary" id="submitButton" onclick="AddOrderDetailDataToForm()" />
                     <input type="reset" value="Cancel Order" class="btn" />
                 @*</p>*@
 
@@ -247,7 +247,7 @@
             return data.indexOf(dataItem);
         }
 
-        function showData() {
+        function AddOrderDetailDataToForm() {
 
             var gview = $('#OrderDetailLists').data('kendoGrid');
             var items = gview.dataSource.data();

@@ -18,12 +18,22 @@
                     <div><b>Product ID: </b> #: ID #</div>
                     <div>Product Code: #: ProductCode #</div>
                     <div>Name: #: Name #</div>
-                        <div>Product Status: #: ProductStatus #</div>
+                    <div>Product Status: #: ProductStatus #</div>
                     <div>Charge Frequence: #: ChargeFrequency #</div>
-                    <div>Charge: AUD#: Charge #</div>
-                  <div>Effective Date: #=kendo.toString(EffectiveDate,"yyyy-MM-dd") #</div>
-                  <div>End Date: #=kendo.toString(EndDate,"yyyy-MM-dd") #</div>
-                  
+    
+                    <div>
+                            Charge Type:    
+                            #if(ChargeType == 'Tiered'){#
+                                <a href='\#' onclick='showTieredWindow()'> #: ChargeType # </a>
+                            #}else{#
+                                 #: ChargeType #
+                            #}#
+                    </div>
+    
+    
+                    <div>Charge: AUD #: Charge #</div>
+                    <div>Effective Date: #=kendo.toString(EffectiveDate,"yyyy-MM-dd") #</div>
+                    <div>End Date: #=kendo.toString(EndDate,"yyyy-MM-dd") #</div>
                 </div>
 
              <div class='span4'>
@@ -36,7 +46,7 @@
                   <div>FixedOperatorRevenue: #: FixedOperatorRevenue #</div>
                   <div>PercentagePartnerRevenue: #: PercentagePartnerRevenue #</div>
                   <div>PercentageOperatorRevenue: #: PercentageOperatorRevenue #</div>
-                    <div>Description: #: Description #</div>
+                  <div>Description: #: Description #</div>
             </div>
         </div>
     </div>
