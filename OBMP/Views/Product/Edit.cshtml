@@ -10,7 +10,7 @@
 
 <ul id="myTab" class="nav nav-tabs">
     <li><a href="~/Product/Manage" class="btn-large">Product List</a></li>
-    <li  class="active"><a href="~/Product/Add"  class="btn-large">Add New Product</a></li>
+    <li  class="active"><a href="~/Product/Add"  class="btn-large">Edit Product</a></li>
     <li><a href="~/Product/Category" class="btn-large">Category</a></li>
     <li><a href="~/Product/MarketPlaceSection"  class="btn-large">Market Place Section</a></li>
 </ul>
@@ -118,7 +118,7 @@
                         <script>
 
                             (function () {
-                                toastr.success('Product data saved successfully :)');
+                                toastr.success('Product data updated successfully :)');
 
                             })();
                         </script>
@@ -225,7 +225,7 @@
                     @Html.LabelFor(model => model.EffectiveDate, new { @class = "control-label" })
 
                     <div class="controls">
-                        @Html.Kendo().DatePicker().Name("EffectiveDate").Value(DateTime.Today).Format("yyyy-MM-dd")
+                        @Html.Kendo().DatePickerFor(model=>model.EffectiveDate).Format("yyyy-MM-dd")
                         @Html.ValidationMessageFor(model => model.EffectiveDate)
                     </div>
                 </div>
@@ -238,7 +238,7 @@
                     @Html.LabelFor(model => model.EndDate, new { @class = "control-label" })
 
                     <div class="controls">
-                        @Html.Kendo().DatePicker().Name("EndDate").Value(DateTime.Today.AddMonths(6)).Format("yyyy-MM-dd")
+                        @Html.Kendo().DatePickerFor(model=>model.EndDate).Format("yyyy-MM-dd")
                         @Html.ValidationMessageFor(model => model.EndDate)
                     </div>
                 </div>
@@ -310,8 +310,7 @@
                     @Html.LabelFor(model => model.ProductStatus,"Product Status", new { @class = "control-label" })
 
                     <div class="controls">
-                        @(Html.Kendo().DropDownList()
-                              .Name("ProductStatus")
+                        @(Html.Kendo().DropDownListFor(model => model.ProductStatus)
                               .DataTextField("Text")
                               .DataValueField("Value")
                               .BindTo(new List<SelectListItem>() {
@@ -328,7 +327,6 @@
                                       Value = "PendingApproval"
                                   }                                  
                               })
-                              
                         )
 
                         @Html.ValidationMessageFor(model => model.ProductStatus)
@@ -341,6 +339,8 @@
 
 </div>
 
+        
+        
 <div class="well well-small">
 
         <h4>Pricing</h4> <hr />
@@ -355,16 +355,18 @@
                     <div class="controls">
 
                         <label class="radio inline">
-                          <input type="radio" id="ChargeFrequencyRadio1" value="OneOff" name="ChargeFrequency"  checked="checked"> One off
+                            @Html.RadioButtonFor(model=> model.ChargeFrequency, "OneOff")  One off
                         </label>
                         <label class="radio inline">
-                          <input type="radio" id="ChargeFrequencyRadio2" value="Recurring" name="ChargeFrequency"> Recurring ongoing
+                             @Html.RadioButtonFor(model=> model.ChargeFrequency, "Recurring")
+                            Recurring ongoing
                         </label>
                         <div class="input-prepend input-append">
                         <label class="radio inline">
-                          <input type="radio" id="ChargeFrequencyRadio3" value="RecurringFixed" name="ChargeFrequency"> Recurring Fixed 
+                            @Html.RadioButtonFor(model=> model.ChargeFrequency, "RecurringFixed")
+                             Recurring Fixed 
                             
-                          <input type="text" name="RecurringFixedMonth" id="RecurringFixedMonth" class="input-mini" value="24" /> 
+                            @Html.TextBoxFor(model => Model.RecurringFixedMonth, new {@class="input-mini", @value="24" })
                             <span class="add-on">months</span>
                         </label>
                                 </div>
@@ -385,13 +387,16 @@
                     <div class="controls">
 
                         <label class="radio inline">
-                          <input type="radio" id="radioChargeType1" value="OneOff" name="ChargeType"  checked="checked"> Fixed
+                          @Html.RadioButtonFor(model=> model.ChargeType, "Fixed")
+                            Fixed
                         </label>
                         <label class="radio inline">
-                          <input type="radio" id="radioChargeType2" value="Usage" name="ChargeType"> Usage
+                             @Html.RadioButtonFor(model=> model.ChargeType, "Usage")
+                            Usage
                         </label>
                         <label class="radio inline">
-                          <input type="radio" id="radioChargeType3" value="Tiered" name="ChargeType"> Tiered usage
+                             @Html.RadioButtonFor(model=> model.ChargeType, "Tiered")
+                            Tiered usage
                         </label>
 
                     </div>
@@ -410,7 +415,7 @@
 
                         <div class="input-prepend input-append">
                           <span class="add-on">$</span>
-                          <input class="input-mini" id="Charge" name="Charge" type="text" value="0">
+                           @Html.TextBoxFor(model =>model.Charge, new {@class="input-mini"}) 
                           <span class="add-on">.00</span>
                         </div>
                         @Html.ValidationMessageFor(model => model.Charge)
@@ -424,8 +429,7 @@
                     <label class="control-label">Apply GST</label>
 
                     <div class="controls">
-                        @*@Html.EditorFor(model=>model.ApplyGST)*@
-                        @Html.CheckBox("ApplyGST", true)
+                        @Html.CheckBoxFor(model=>model.ApplyGST.Value )
                         @Html.ValidationMessageFor(model => model.ApplyGST)
                         <div class="hidden">
                             @Html.Kendo().DatePicker().Name("DateRegistered").Value(DateTime.Today).Format("yyyy-MM-dd")
@@ -488,10 +492,12 @@
 
                     <div class="controls">
                         <label class="radio inline">
-                          <input type="radio" id="RevenuShareTypeRadio1" value="Fixed" name="RevenuShareType" checked="checked"> Fixed
+                            @Html.RadioButtonFor(model=> model.RevenuShareType, "Fixed")
+                             Fixed
                         </label>
                         <label class="radio inline">
-                          <input type="radio" id="RevenuShareTypeRadio2" value="Percentage" name="RevenuShareType"> Percentage
+                            @Html.RadioButtonFor(model=> model.RevenuShareType, "Percentage")
+                            Percentage
                         </label>
                     </div>
                 </div>
@@ -510,7 +516,8 @@
 
                         <div class="input-prepend input-append">
                           <span class="add-on">$</span>
-                          <input class="input-mini" id="FixedPartnerRevenue" name="FixedPartnerRevenue" type="text" value="0">
+                          @*<input class="input-mini" id="FixedPartnerRevenue" name="FixedPartnerRevenue" type="text" value="0">*@
+                             @Html.TextBoxFor(model =>model.FixedPartnerRevenue, new {@class="input-mini"}) 
                           <span class="add-on">.00</span>
                         </div>
                     </div>
@@ -527,7 +534,8 @@
 
                         <div class="input-prepend input-append">
                           <span class="add-on">$</span>
-                          <input class="input-mini" id="FixedOperatorRevenue" name="FixedOperatorRevenue" type="text" value="0">
+                          @*<input class="input-mini" id="FixedOperatorRevenue" name="FixedOperatorRevenue" type="text" value="0">*@
+                             @Html.TextBoxFor(model =>model.FixedOperatorRevenue, new {@class="input-mini"}) 
                           <span class="add-on">.00</span>
                         </div>
                     </div>
@@ -547,7 +555,8 @@
                     <div class="controls">
 
                         <div class="input-prepend input-append">
-                          <input class="input-mini" id="PercentagePartnerRevenue" name="PercentagePartnerRevenue" type="text" value="0">
+                          @*<input class="input-mini" id="PercentagePartnerRevenue" name="PercentagePartnerRevenue" type="text" value="0">*@
+                             @Html.TextBoxFor(model =>model.PercentagePartnerRevenue, new {@class="input-mini"}) 
                           <span class="add-on">%</span>
                         </div>
                     </div>
@@ -563,7 +572,8 @@
                     <div class="controls">
 
                         <div class="input-prepend input-append">
-                          <input class="input-mini" id="PercentageOperatorRevenue" name="PercentageOperatorRevenue" type="text" value="0">
+                          @*<input class="input-mini" id="PercentageOperatorRevenue" name="PercentageOperatorRevenue" type="text" value="0">*@
+                              @Html.TextBoxFor(model =>model.PercentageOperatorRevenue, new {@class="input-mini"}) 
                           <span class="add-on">%</span>
                         </div>
                     </div>

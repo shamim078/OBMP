@@ -76,7 +76,10 @@
           //columns.Bound(p => p.EndDate).Format("{0:d}");
           columns.Bound(p => p.ProductStatus).Title("Status");
           columns.Bound(p => p.PartnerName).Title("Partner");
-          columns.Command(commands => { commands.Edit(); }).Width(100);
+          //columns.Command(commands => { commands.Edit(); }).Width(100);
+          //columns.Command(command => command.Custom("ViewDetails").Click("showDetails"));
+          columns.Template(@<text></text>).ClientTemplate(
+                @Html.ActionLink("Edit", "Edit", new { id = "#=ID#" }).ToHtmlString());
       })
       .Pageable() // Enable paging
       .Sortable() // Enable sorting
@@ -84,3 +87,17 @@
       .Editable(editable => editable.Mode(GridEditMode.PopUp))
       .ClientDetailTemplateId("client-template")
 )
+
+
+@section Scripts {
+    
+    <script>
+
+        function showDetails(e) {
+            
+            alert('hello');
+        }
+
+    </script>
+
+}
