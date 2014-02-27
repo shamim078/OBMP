@@ -9,7 +9,45 @@
     <li><a href="~/Product/MarketPlaceSection"  class="btn-large">Market Place Section</a></li>
 </ul>
 
+<script>
 
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+</script>
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "true")
+{
+                    
+                        <script>
+
+                            (function () {
+                                toastr.success('Product data updated successfully :)');
+
+                            })();
+                        </script>
+}
+
+@if (TempData["Success"] != null && TempData["Success"].ToString() == "false")
+{
+                    
+                        <script>
+                            (function () {
+                                toastr.error('Some erroe occured :(');
+                            })();
+                        </script>
+}
 
 <script id="client-template" type="text/x-kendo-template">
     <div class='well'>
