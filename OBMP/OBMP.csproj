@@ -920,6 +920,7 @@
     <Content Include="Views\Product\MarketPlaceSection.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TextBoxSmall.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Product\_TieredData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

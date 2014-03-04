@@ -1,0 +1,16 @@
+﻿@model IEnumerable<OBMPDataModel.ProductTieredUsage>
+
+<div class="well">
+
+@(Html.Kendo().Grid(Model)
+    .Name("ProductTieredUsage")
+    
+    .Columns(c => {
+        c.Bound(t => t.ID).Visible(false);
+        c.Bound(t => t.Lower).Title("Lower Range");
+        c.Bound(t => t.Upper).Title("Upper Range");
+        c.Bound(t => t.Charge).Title("Charge(AUD)");
+    })
+)
+
+</div>

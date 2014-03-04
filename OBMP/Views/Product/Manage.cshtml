@@ -2,6 +2,9 @@
     ViewBag.Title = "Manage Partner Products";
 }
 
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+
 <ul id="myTab" class="nav nav-tabs">
     <li  class="active"><a href="~/Product/Manage" class="btn-large">Product List</a></li>
     <li><a href="~/Product/Add"  class="btn-large">Add New Product</a></li>
@@ -62,7 +65,7 @@
                     <div>
                             Charge Type:    
                             #if(ChargeType == 'Tiered'){#
-                                <a href='\#' onclick='showTieredWindow()'> #: ChargeType # </a>
+                                <a href='\#' onclick='showTieredWindow(#: ID #)'> #: ChargeType # </a>
                             #}else{#
                                  #: ChargeType #
                             #}#
@@ -131,11 +134,27 @@
     
     <script>
 
-        function showDetails(e) {
-            
-            alert('hello');
+        function showTieredWindow( id) {
+            var wnd = $("#tierWindow").data("kendoWindow");
+            wnd.refresh({
+                url: "/Product/TieredData",
+                data: { productID: id }
+            });
+
+            wnd.center().open();
         }
 
     </script>
 
 }
+
+
+@(Html.Kendo().Window()
+    .Name("tierWindow")
+    .Title("Product tier data")
+    .Visible(false)
+    .Modal(true)
+    .Content("loading data...")
+    .Draggable(true)
+    .Width(550)    
+)
